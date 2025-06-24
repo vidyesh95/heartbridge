@@ -4,37 +4,40 @@ import Link from "next/link";
 export default function Home() {
     return (
         <main>
-            <section>
-                <p>♡ India's most trusted matrimonial platform</p>
-                <h1>Find Your</h1>
-                <h1>Perfect Match</h1>
-                <p>
+            <section className={"flex flex-col items-center justify-center gap-4 h-screen"}>
+                <p className={"w-auto px-3 py-1 rounded-full bg-muted"}>♡ India's most trusted matrimonial platform</p>
+                <h1 className={"text-center text-4xl md:text-6xl"}>Find Your<span className={"block text-primary"}>Perfect Match</span></h1>
+                <p className={"max-w-2xl text-muted-foreground text-center px-4 md:px-0"}>
                     Join thousands of successful couples who found their soulmate through our trusted matrimonial
                     platform. Your journey to happiness starts here.
                 </p>
-                <Button asChild>
-                    <Link href={"/"}>Start your journey 💘</Link>
-                </Button>
-                <Button variant={"outline"} asChild>
-                    <Link href={"/"}>Browse profiles 🔍</Link>
-                </Button>
-                <div>
+                <div className={"w-full md:w-auto flex flex-col md:flex-row gap-4 px-4 md:px-0"}>
+                    <Button variant={"outline"} asChild>
+                        <Link href={"/"}>Browse Profiles 🔍</Link>
+                    </Button>
+                    <Button asChild>
+                        <Link href={"/"}>Start Your Journey 💘</Link>
+                    </Button>
+                </div>
+                <div className={"flex flex-col md:flex-row gap-4 md:gap-16"}>
                     <div>
-                        <h4>50K+</h4>
-                        <p>ACTIVE MEMBERS</p>
+                        <h4 className={"text-4xl text-primary text-center"}>50K+</h4>
+                        <p className={"text-sm text-muted-foreground text-center"}>ACTIVE MEMBERS</p>
                     </div>
                     <div>
-                        <h4>10K+</h4>
-                        <p>SUCCESS STORIES</p>
+                        <h4 className={"text-4xl text-primary text-center"}>10K+</h4>
+                        <p className={"text-sm text-muted-foreground text-center"}>SUCCESS STORIES</p>
                     </div>
                     <div>
-                        <h4>100%</h4>
-                        <p>VERIFIED</p>
+                        <h4 className={"text-4xl text-primary text-center"}>100%</h4>
+                        <p className={"text-sm text-muted-foreground text-center"}>VERIFIED</p>
                     </div>
                 </div>
-                <p>✅ 100% Verified Profiles</p>
-                <p>✅ Privacy Protected</p>
-                <p>✅ Personal Matchmaker</p>
+                <div className="flex flex-col md:flex-row md:gap-8">
+                    <p className={"text-center text-muted-foreground"}>✅ 100% Verified Profiles</p>
+                    <p className={"text-center text-muted-foreground"}>✅ Privacy Protected</p>
+                    <p className={"text-center text-muted-foreground"}>✅ Personal Matchmaker</p>
+                </div>
             </section>
         </main>
     )
