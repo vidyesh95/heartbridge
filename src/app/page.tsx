@@ -5,8 +5,10 @@ export default function Home() {
     return (
         <main>
             <section className={"flex flex-col items-center justify-center gap-4 h-screen"}>
-                <p className={"w-auto px-3 py-1 rounded-full bg-muted"}>♡ India's most trusted matrimonial platform</p>
-                <h1 className={"text-center text-4xl md:text-6xl"}>Find Your<span className={"block text-primary"}>Perfect Match</span></h1>
+                <p className={"w-auto px-3 py-1 rounded-full bg-muted"}>♡ India&apos;s most trusted matrimonial platform</p>
+                <h1 className={"text-center text-4xl md:text-6xl"}>
+                    Find Your<span className={"block text-primary"}>Perfect Match</span>
+                </h1>
                 <p className={"max-w-2xl text-muted-foreground text-center px-4 md:px-0"}>
                     Join thousands of successful couples who found their soulmate through our trusted matrimonial
                     platform. Your journey to happiness starts here.
