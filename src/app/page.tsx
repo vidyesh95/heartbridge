@@ -5,19 +5,19 @@ export default function Home() {
     return (
         <main>
             <section className={"h-screen flex flex-col items-center justify-center gap-8 md:gap-16 px-4 md:px-0"}>
-                <p className={"w-auto px-3 py-1 rounded-full bg-muted"}>
+                <p className={"px-3 py-1 rounded-full bg-muted"}>
                     ♡ India&apos;s most trusted matrimonial platform
                 </p>
                 <div className={"space-y-4 md:space-y-8 text-center"}>
-                    <h1 className={"text-center text-4xl md:text-6xl"}>
+                    <h1 className={"text-4xl md:text-6xl"}>
                         Find Your<span className={"block text-primary"}>Perfect Match</span>
                     </h1>
-                    <p className={"max-w-2xl text-muted-foreground text-center px-4 md:px-0"}>
+                    <p className={"max-w-2xl text-muted-foreground"}>
                         Join thousands of successful couples who found their soulmate through our trusted matrimonial
                         platform. Your journey to happiness starts here.
                     </p>
                 </div>
-                <div className={"w-full md:w-auto flex flex-col md:flex-row gap-4 px-4 md:px-0"}>
+                <div className={"w-full md:w-auto flex flex-col md:flex-row gap-4"}>
                     <Button variant={"outline"} asChild>
                         <Link href={"/"}>Browse Profiles 🔍</Link>
                     </Button>
