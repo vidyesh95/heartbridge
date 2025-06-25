@@ -1,6 +1,6 @@
 import {Button} from "@/components/ui/button";
 import Link from "next/link";
-import {UserPlus} from "lucide-react";
+import {Heart, Phone, UserPlus} from "lucide-react";
 
 export default function HowItWorksSection() {
     return (
@@ -12,7 +12,7 @@ export default function HowItWorksSection() {
                     convenience
                 </p>
             </div>
-            <div className={"grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-8 w-full max-w-5xl"}>
+            <div className={"w-full max-w-5xl grid grid-cols-1 md:grid-cols-3 gap-8"}>
                 <div className={"flex flex-col items-center justify-center gap-2 md:gap-4"}>
                     <div
                         className={"flex justify-center items-center h-16 w-16 bg-primary-foreground rounded-full text-primary border"}
@@ -30,26 +30,24 @@ export default function HowItWorksSection() {
                     <div
                         className={"flex justify-center items-center h-16 w-16 bg-primary-foreground rounded-full text-primary border"}
                     >
-                        <UserPlus/>
+                        <Heart/>
                     </div>
-                    <p className={"text-muted-foreground text-center"}>STEP 1</p>
-                    <h4 className={"text-2xl md:text-3xl text-primary text-center"}>Register & Verify</h4>
+                    <p className={"text-muted-foreground text-center"}>STEP 2</p>
+                    <h4 className={"text-2xl md:text-3xl text-primary text-center"}>Browse & Connect</h4>
                     <p className={"text-muted-foreground text-center"}>
-                        Create your detailed profile and verify your contact details for complete security and
-                        authenticity.
+                        Explore potential matches using our smart algorithm and express interest in promising profiles.
                     </p>
                 </div>
                 <div className={"flex flex-col items-center justify-center gap-2 md:gap-4"}>
                     <div
                         className={"flex justify-center items-center h-16 w-16 bg-primary-foreground rounded-full text-primary border"}
                     >
-                        <UserPlus/>
+                        <Phone/>
                     </div>
-                    <p className={"text-muted-foreground text-center"}>STEP 1</p>
-                    <h4 className={"text-2xl md:text-3xl text-primary text-center"}>Register & Verify</h4>
+                    <p className={"text-muted-foreground text-center"}>STEP 3</p>
+                    <h4 className={"text-2xl md:text-3xl text-primary text-center"}>Personal Assistance</h4>
                     <p className={"text-muted-foreground text-center"}>
-                        Create your detailed profile and verify your contact details for complete security and
-                        authenticity.
+                        Our dedicated matchmakers facilitate introductions and guide both families through the process.
                     </p>
                 </div>
             </div>
