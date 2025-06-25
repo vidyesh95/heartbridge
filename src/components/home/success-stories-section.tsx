@@ -1,5 +1,6 @@
-import {Card} from "@/components/ui/card";
+import {Card, CardContent} from "@/components/ui/card";
 import Image from "next/image";
+import {Quote} from "lucide-react";
 
 export default function SuccessStoriesSection() {
     return (
@@ -12,8 +13,31 @@ export default function SuccessStoriesSection() {
                     Real couples who found their perfect match and built beautiful lives together
                 </p>
             </div>
-            <Card>
-                <Image src={"/success_story1.avif"} alt={"success story"} width={1024} height={600} objectFit={"cover"}/>
+            <Card className={"py-0 overflow-hidden"}>
+                <CardContent className={"px-0 grid grid-cols-1 md:grid-cols-2 w-full max-w-5xl"}>
+                    <Image priority={false} src={"/success_story1.avif"} alt={"success story"} width={512}
+                           height={683} className={"w-128 h-170 object-cover"}/>
+                    <div className={"p-4 md:p-16"}>
+                        <Quote size={48} className={"text-muted"}/>
+                        <h4 className={"text-4xl md:text-2xl"}>
+                            HeartBridge Classic helped us find each other through their wonderful matchmaking service. Our families connected beautifully and we couldn&apos;t be happier.
+                        </h4>
+                        <Quote size={48} className={"text-muted"}/>
+                        <p className={"text-muted-foreground mt-4 mb-8"}>
+                            We were both busy professionals who had little time for traditional matchmaking. The platform&apos;s personalized approach made all the difference.
+                        </p>
+                        <hr/>
+                        <p className={"text-lg font-semibold text-foreground mt-8"}>
+                            Yania & Lobsang
+                        </p>
+                        <p className={"text-muted-foreground"}>
+                            Itanagar
+                        </p>
+                        <p className={"text-sm text-muted-foreground"}>
+                            Married on 15th March 2025
+                        </p>
+                    </div>
+                </CardContent>
             </Card>
         </section>
     )
