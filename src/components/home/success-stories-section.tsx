@@ -20,11 +20,15 @@ export default function SuccessStoriesSection() {
                     <div className={"p-4 md:p-16"}>
                         <Quote size={48} className={"text-muted"}/>
                         <h4 className={"text-4xl md:text-2xl"}>
-                            HeartBridge Classic helped us find each other through their wonderful matchmaking service. Our families connected beautifully and we couldn&apos;t be happier.
+                            HeartBridge Classic helped us find each other through their wonderful matchmaking service.
+                            Our families connected beautifully and we are overjoyed.
                         </h4>
-                        <Quote size={48} className={"text-muted"}/>
-                        <p className={"text-muted-foreground mt-4 mb-8"}>
-                            We were both busy professionals who had little time for traditional matchmaking. The platform&apos;s personalized approach made all the difference.
+                        <div className={"flex justify-end"}>
+                            <Quote size={48} className={"text-muted"}/>
+                        </div>
+                        <p className={"text-muted-foreground mt-2 mb-8"}>
+                            We were both busy professionals who had little time for traditional matchmaking. The
+                            platform&apos;s personalized approach made all the difference.
                         </p>
                         <hr/>
                         <p className={"text-lg font-semibold text-foreground mt-8"}>
