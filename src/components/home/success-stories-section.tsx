@@ -20,14 +20,14 @@ export default function SuccessStoriesSection() {
                     <div className={"p-4 md:p-16"}>
                         <Quote size={48} className={"text-muted"}/>
                         <h4 className={"text-4xl md:text-2xl"}>
-                            HeartBridge Classic helped us find each other through their wonderful matchmaking service.
+                            HeartBridge helped us find each other through their wonderful matchmaking service.
                             Our families connected beautifully and we are overjoyed.
                         </h4>
                         <div className={"flex justify-end"}>
                             <Quote size={48} className={"text-muted"}/>
                         </div>
                         <p className={"text-muted-foreground mt-2 mb-8"}>
-                            We were both busy professionals who had little time for traditional matchmaking. The
+                            We are both busy professionals who had little time for traditional matchmaking. The
                             platform&apos;s personalized approach made all the difference.
                         </p>
                         <hr/>
@@ -78,7 +78,7 @@ export default function SuccessStoriesSection() {
                     <div className={"p-4 md:p-16"}>
                         <Quote size={48} className={"text-muted"}/>
                         <h4 className={"text-4xl md:text-2xl"}>
-                            We are grateful for HeartBridge Classic&apos;s approach. The human element in matchmaking helped us build trust from the very beginning.
+                            We are grateful for HeartBridge&apos;s approach. The human element in matchmaking helped us build trust from the very beginning.
                         </h4>
                         <div className={"flex justify-end"}>
                             <Quote size={48} className={"text-muted"}/>
