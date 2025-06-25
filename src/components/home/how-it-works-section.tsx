@@ -12,7 +12,33 @@ export default function HowItWorksSection() {
                     convenience
                 </p>
             </div>
-            <div>
+            <div className={"grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-8 w-full max-w-5xl"}>
+                <div className={"flex flex-col items-center justify-center gap-2 md:gap-4"}>
+                    <div
+                        className={"flex justify-center items-center h-16 w-16 bg-primary-foreground rounded-full text-primary border"}
+                    >
+                        <UserPlus/>
+                    </div>
+                    <p className={"text-muted-foreground text-center"}>STEP 1</p>
+                    <h4 className={"text-2xl md:text-3xl text-primary text-center"}>Register & Verify</h4>
+                    <p className={"text-muted-foreground text-center"}>
+                        Create your detailed profile and verify your contact details for complete security and
+                        authenticity.
+                    </p>
+                </div>
+                <div className={"flex flex-col items-center justify-center gap-2 md:gap-4"}>
+                    <div
+                        className={"flex justify-center items-center h-16 w-16 bg-primary-foreground rounded-full text-primary border"}
+                    >
+                        <UserPlus/>
+                    </div>
+                    <p className={"text-muted-foreground text-center"}>STEP 1</p>
+                    <h4 className={"text-2xl md:text-3xl text-primary text-center"}>Register & Verify</h4>
+                    <p className={"text-muted-foreground text-center"}>
+                        Create your detailed profile and verify your contact details for complete security and
+                        authenticity.
+                    </p>
+                </div>
                 <div className={"flex flex-col items-center justify-center gap-2 md:gap-4"}>
                     <div
                         className={"flex justify-center items-center h-16 w-16 bg-primary-foreground rounded-full text-primary border"}
