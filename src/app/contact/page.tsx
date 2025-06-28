@@ -3,6 +3,7 @@ import {Button} from "@/components/ui/button";
 import {Clock, Mail, MapPin, MessageCircle, Phone} from "lucide-react";
 import {Label} from "@/components/ui/label";
 import {Input} from "@/components/ui/input";
+import {Textarea} from "@/components/ui/textarea";
 
 export default function Contact() {
     return (
@@ -118,7 +119,7 @@ export default function Contact() {
                         </div>
                         <div className={"space-y-1 md:space-y-2"}>
                             <Label htmlFor={"message"}>Message</Label>
-                            <Input type={"textarea"} id={"message"} placeholder={"Your message"}/>
+                            <Textarea id={"message"} placeholder={"Type your message here."}/>
                         </div>
                     </CardContent>
                     <CardFooter>
