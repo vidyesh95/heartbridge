@@ -4,8 +4,16 @@ import {Clock, Mail, MapPin, MessageCircle, Phone} from "lucide-react";
 import {Label} from "@/components/ui/label";
 import {Input} from "@/components/ui/input";
 import {Textarea} from "@/components/ui/textarea";
+import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from "@/components/ui/form";
+import {useForm} from "react-hook-form";
 
 export default function Contact() {
+    const form = useForm()
+
+    function onSubmit() {
+        console.log("hello")
+    }
+
     return (
         <section className={"flex flex-col items-center justify-center gap-16 px-4 md:px-0 py-32 bg-secondary"}>
             <div className={"space-y-4 md:space-y-8 text-center"}>
@@ -93,38 +101,74 @@ export default function Contact() {
                     </Card>
                 </div>
                 <Card className={"h-auto self-start"}>
-                    <CardHeader>
-                        <CardTitle>Send us a message</CardTitle>
-                    </CardHeader>
-                    <CardContent className={"space-y-2 md:space-y-4"}>
-                        <div className={"space-y-1 md:space-y-2"}>
-                            <Label htmlFor={"first-name"}>Name</Label>
-                            <Input type={"text"} id={"first-name"} placeholder={"Your first name"}/>
-                        </div>
-                        <div className={"space-y-1 md:space-y-2"}>
-                            <Label htmlFor={"last-name"}>Last name</Label>
-                            <Input type={"text"} id={"last-name"} placeholder={"Your last name"}/>
-                        </div>
-                        <div className={"space-y-1 md:space-y-2"}>
-                            <Label htmlFor={"email"}>Email</Label>
-                            <Input type={"email"} id={"email"} placeholder={"your.email@domain.com"}/>
-                        </div>
-                        <div className={"space-y-1 md:space-y-2"}>
-                            <Label htmlFor={"phone"}>Phone</Label>
-                            <Input type={"tel"} id={"phone"} placeholder={"+91 98765 43210"}/>
-                        </div>
-                        <div className={"space-y-1 md:space-y-2"}>
-                            <Label htmlFor={"subject"}>Subject</Label>
-                            <Input type={"text"} id={"subject"} placeholder={"Your subject"}/>
-                        </div>
-                        <div className={"space-y-1 md:space-y-2"}>
-                            <Label htmlFor={"message"}>Message</Label>
-                            <Textarea id={"message"} placeholder={"Type your message here."}/>
-                        </div>
-                    </CardContent>
-                    <CardFooter>
-                        <Button>Send Message</Button>
-                    </CardFooter>
+                    <Form {...form}>
+                        <form onSubmit={form.handleSubmit(onSubmit)}>
+                            <CardHeader>
+                                <CardTitle>Send us a message</CardTitle>
+                            </CardHeader>
+                            <CardContent className={"space-y-2 md:space-y-4"}>
+                                <FormField
+                                    control={form.control}
+                                    name={"first-name"}
+                                    render={
+                                        ({field}) => (
+                                            <FormItem className={"space-y-1 md:space-y-2"}>
+                                                <FormLabel htmlFor={"first-name"}>Name</FormLabel>
+                                                <FormControl>
+                                                    <Input
+                                                        type={"text"}
+                                                        id={"first-name"}
+                                                        placeholder={"Your first name"}
+                                                        {...field}
+                                                    />
+                                                </FormControl>
+                                                <FormMessage/>
+                                            </FormItem>
+                                        )
+                                    }
+                                />
+                                <FormField
+                                    control={form.control}
+                                    name={"last-name"}
+                                    render={
+                                        ({field}) => (
+                                            <FormItem className={"space-y-1 md:space-y-2"}>
+                                                <FormLabel htmlFor={"last-name"}>Last name</FormLabel>
+                                                <FormControl>
+                                                    <Input
+                                                        type={"text"}
+                                                        id={"last-name"}
+                                                        placeholder={"Your last name"}
+                                                        {...field}
+                                                    />
+                                                </FormControl>
+                                                <FormMessage/>
+                                            </FormItem>
+                                        )
+                                    }
+                                />
+                                <div className={"space-y-1 md:space-y-2"}>
+                                    <Label htmlFor={"email"}>Email</Label>
+                                    <Input type={"email"} id={"email"} placeholder={"your.email@domain.com"}/>
+                                </div>
+                                <div className={"space-y-1 md:space-y-2"}>
+                                    <Label htmlFor={"phone"}>Phone</Label>
+                                    <Input type={"tel"} id={"phone"} placeholder={"+91 98765 43210"}/>
+                                </div>
+                                <div className={"space-y-1 md:space-y-2"}>
+                                    <Label htmlFor={"subject"}>Subject</Label>
+                                    <Input type={"text"} id={"subject"} placeholder={"Your subject"}/>
+                                </div>
+                                <div className={"space-y-1 md:space-y-2"}>
+                                    <Label htmlFor={"message"}>Message</Label>
+                                    <Textarea id={"message"} placeholder={"Type your message here."}/>
+                                </div>
+                            </CardContent>
+                            <CardFooter>
+                                <Button type={"submit"}>Send Message</Button>
+                            </CardFooter>
+                        </form>
+                    </Form>
                 </Card>
             </div>
         </section>
