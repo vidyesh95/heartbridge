@@ -35,7 +35,7 @@ export default function FooterSection(){
                         <Link href={"/"}>
                             <p className={"text-primary-foreground"}>Frequently Asked Questions</p>
                         </Link>
-                        <Link href={"/"}>
+                        <Link href={"/contact"}>
                             <p className={"text-primary-foreground"}>Contact us</p>
                         </Link>
                         <Link href={"/"}>
