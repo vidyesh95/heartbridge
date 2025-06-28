@@ -1,4 +1,6 @@
 import {Accordion, AccordionContent, AccordionItem, AccordionTrigger} from "@/components/ui/accordion";
+import {Button} from "@/components/ui/button";
+import Link from "next/link";
 
 const faqsValues = [
     {
@@ -70,6 +72,20 @@ export default function FrequentlyAskedQuestionsSection() {
                     </AccordionItem>
                     ))}
                 </Accordion>
+            </div>
+            <div className={"flex flex-col items-center justify-center gap-4 w-full max-w-5xl bg-card rounded-xl p-4 md:p-8"}>
+                <h5 className={"text-2xl md:text-3xl text-card-foreground"}>Still have questions?</h5>
+                <p className={"text-muted-foreground text-center"}>
+                    Our customer support team is here to help you with any additional questions or concerns.
+                </p>
+                <div className={"w-full md:w-auto flex flex-col md:flex-row gap-4 mt-4"}>
+                    <Button variant={"outline"} asChild>
+                        <Link href={"tel:+919876543210"}>Call Us ☎️: +91 98765 43210</Link>
+                    </Button>
+                    <Button variant={"default"} asChild>
+                        <Link href={"/"}>Contact Support 📧</Link>
+                    </Button>
+                </div>
             </div>
         </section>
     )
