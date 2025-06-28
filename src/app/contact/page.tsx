@@ -1,7 +1,6 @@
 import {Card, CardContent, CardFooter, CardHeader, CardTitle} from "@/components/ui/card";
 import {Button} from "@/components/ui/button";
 import {Clock, Mail, MapPin, MessageCircle, Phone} from "lucide-react";
-import {Label} from "@/components/ui/label";
 import {Input} from "@/components/ui/input";
 import {Textarea} from "@/components/ui/textarea";
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from "@/components/ui/form";
@@ -147,22 +146,85 @@ export default function Contact() {
                                         )
                                     }
                                 />
-                                <div className={"space-y-1 md:space-y-2"}>
-                                    <Label htmlFor={"email"}>Email</Label>
-                                    <Input type={"email"} id={"email"} placeholder={"your.email@domain.com"}/>
-                                </div>
-                                <div className={"space-y-1 md:space-y-2"}>
-                                    <Label htmlFor={"phone"}>Phone</Label>
-                                    <Input type={"tel"} id={"phone"} placeholder={"+91 98765 43210"}/>
-                                </div>
-                                <div className={"space-y-1 md:space-y-2"}>
-                                    <Label htmlFor={"subject"}>Subject</Label>
-                                    <Input type={"text"} id={"subject"} placeholder={"Your subject"}/>
-                                </div>
-                                <div className={"space-y-1 md:space-y-2"}>
-                                    <Label htmlFor={"message"}>Message</Label>
-                                    <Textarea id={"message"} placeholder={"Type your message here."}/>
-                                </div>
+                                <FormField
+                                    control={form.control}
+                                    name={"email"}
+                                    render={
+                                        ({field}) => (
+                                            <FormItem className={"space-y-1 md:space-y-2"}>
+                                                <FormLabel htmlFor={"email"}>Email</FormLabel>
+                                                <FormControl>
+                                                    <Input
+                                                        type={"email"}
+                                                        id={"email"}
+                                                        placeholder={"your.email@domain.com"}
+                                                        {...field}
+                                                    />
+                                                </FormControl>
+                                                <FormMessage/>
+                                            </FormItem>
+                                        )
+                                    }
+                                />
+                                <FormField
+                                    control={form.control}
+                                    name={"phone"}
+                                    render={
+                                        ({field}) => (
+                                            <FormItem className={"space-y-1 md:space-y-2"}>
+                                                <FormLabel htmlFor={"phone"}>Phone</FormLabel>
+                                                <FormControl>
+                                                    <Input
+                                                        type={"tel"}
+                                                        id={"phone"}
+                                                        placeholder={"+91 98765 43210"}
+                                                        {...field}
+                                                    />
+                                                </FormControl>
+                                                <FormMessage/>
+                                            </FormItem>
+                                        )
+                                    }
+                                />
+                                <FormField
+                                    control={form.control}
+                                    name={"message"}
+                                    render={
+                                        ({field}) => (
+                                            <FormItem className={"space-y-1 md:space-y-2"}>
+                                                <FormLabel htmlFor={"subject"}>Subject</FormLabel>
+                                                <FormControl>
+                                                    <Input
+                                                        type={"text"}
+                                                        id={"subject"}
+                                                        placeholder={"Your subject"}
+                                                        {...field}
+                                                    />
+                                                </FormControl>
+                                                <FormMessage/>
+                                            </FormItem>
+                                        )
+                                    }
+                                />
+                                <FormField
+                                    control={form.control}
+                                    name={"message"}
+                                    render={
+                                        ({field}) => (
+                                            <FormItem className={"space-y-1 md:space-y-2"}>
+                                                <FormLabel htmlFor={"message"}>Message</FormLabel>
+                                                <FormControl>
+                                                    <Textarea
+                                                        id={"message"}
+                                                        placeholder={"Type your message here."}
+                                                        {...field}
+                                                    />
+                                                </FormControl>
+                                                <FormMessage/>
+                                            </FormItem>
+                                        )
+                                    }
+                                />
                             </CardContent>
                             <CardFooter>
                                 <Button type={"submit"}>Send Message</Button>
