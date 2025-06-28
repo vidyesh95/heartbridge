@@ -1,6 +1,7 @@
 import {Accordion, AccordionContent, AccordionItem, AccordionTrigger} from "@/components/ui/accordion";
 import {Button} from "@/components/ui/button";
 import Link from "next/link";
+import {Mail, Phone} from "lucide-react";
 
 const faqsValues = [
     {
@@ -80,10 +81,10 @@ export default function FrequentlyAskedQuestionsSection() {
                 </p>
                 <div className={"w-full md:w-auto flex flex-col md:flex-row gap-4 mt-4"}>
                     <Button variant={"outline"} asChild>
-                        <Link href={"tel:+919876543210"}>Call Us ☎️: +91 98765 43210</Link>
+                        <Link href={"tel:+919876543210"}>Call Us <Phone/>: +91 98765 43210</Link>
                     </Button>
                     <Button variant={"default"} asChild>
-                        <Link href={"/"}>Contact Support 📧</Link>
+                        <Link href={"/"}>Contact Support <Mail/></Link>
                     </Button>
                 </div>
             </div>
