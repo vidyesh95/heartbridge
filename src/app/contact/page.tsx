@@ -5,9 +5,34 @@ import {Input} from "@/components/ui/input";
 import {Textarea} from "@/components/ui/textarea";
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from "@/components/ui/form";
 import {useForm} from "react-hook-form";
+import {z} from "zod/v4";
+import {zodResolver} from "@hookform/resolvers/zod";
+
+const formSchema =z.object({
+    firstName: z.string().min(1, {error:"Username must be at least 1 character long"}),
+    lastName: z.string().min(1, {error:"Username must be at least 1 character long"}),
+    email: z.email(),
+    phone: z
+        .string()
+        .min(10, {error:"Phone number must be at least 10 digits long"})
+        .max(15, { message: "Phone number must be at most 15 digits" })
+        .regex(/^\d+$/, { message: "Phone number must contain only digits" }),
+    subject: z.string().min(1, {error:"Subject must be at least 1 character long"}),
+    message: z.string().min(1, {error:"Message must be at least 1 character long"}),
+})
 
 export default function Contact() {
-    const form = useForm()
+    const form = useForm<z.infer<typeof formSchema>>({
+        resolver:zodResolver(formSchema),
+        defaultValues: {
+            firstName: "",
+            lastName: "",
+            email: "",
+            phone: "",
+            subject: "",
+            message: "",
+        }
+    })
 
     function onSubmit() {
         console.log("hello")
@@ -108,7 +133,7 @@ export default function Contact() {
                             <CardContent className={"space-y-2 md:space-y-4"}>
                                 <FormField
                                     control={form.control}
-                                    name={"first-name"}
+                                    name={"firstName"}
                                     render={
                                         ({field}) => (
                                             <FormItem className={"space-y-1 md:space-y-2"}>
@@ -128,7 +153,7 @@ export default function Contact() {
                                 />
                                 <FormField
                                     control={form.control}
-                                    name={"last-name"}
+                                    name={"lastName"}
                                     render={
                                         ({field}) => (
                                             <FormItem className={"space-y-1 md:space-y-2"}>
