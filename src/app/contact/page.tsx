@@ -1,3 +1,5 @@
+'use client'
+
 import {Card, CardContent, CardFooter, CardHeader, CardTitle} from "@/components/ui/card";
 import {Button} from "@/components/ui/button";
 import {Clock, Mail, MapPin, MessageCircle, Phone} from "lucide-react";
@@ -130,7 +132,7 @@ export default function Contact() {
                             <CardHeader>
                                 <CardTitle>Send us a message</CardTitle>
                             </CardHeader>
-                            <CardContent className={"space-y-2 md:space-y-4"}>
+                            <CardContent className={"space-y-2 md:space-y-4 py-4 md:py-8"}>
                                 <FormField
                                     control={form.control}
                                     name={"firstName"}
@@ -252,7 +254,7 @@ export default function Contact() {
                                 />
                             </CardContent>
                             <CardFooter>
-                                <Button type={"submit"}>Send Message</Button>
+                                <Button type={"submit"} className={"w-full"}>Send Message</Button>
                             </CardFooter>
                         </form>
                     </Form>
