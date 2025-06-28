@@ -9,7 +9,7 @@ export default function FrequentlyAskedQuestionsSection() {
                     Find answers to common questions about HeartBridge
                 </p>
             </div>
-            <div className={"w-full max-w-5xl px-4 md:px-0 py-16"}>
+            <div className={"w-full max-w-5xl"}>
                 <Accordion type={"multiple"}>
                     <AccordionItem value={"item-1"}>
                         <AccordionTrigger>How do I create a profile on HeartBridge?</AccordionTrigger>
