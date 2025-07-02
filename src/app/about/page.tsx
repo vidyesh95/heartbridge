@@ -5,12 +5,12 @@ export default function About() {
     return (
         <section id={"frequently-asked-questions"}>
             <div className={"flex flex-col items-center justify-center gap-16 px-4 md:px-0 py-32 bg-secondary"}>
-                <div className={"space-y-4 md:space-y-8 text-center"}>
+                <hgroup className={"space-y-4 md:space-y-8 text-center"}>
                     <h3 className={"text-4xl md:text-6xl text-secondary-foreground"}>About HeartBridge</h3>
                     <p className={"max-w-xl text-muted-foreground"}>
                         Connecting hearts, bridging families since 2025
                     </p>
-                </div>
+                </hgroup>
                 <Card className={"w-full max-w-5xl"}>
                     <CardHeader>
                         <CardTitle>Our Mission</CardTitle>

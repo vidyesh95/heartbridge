@@ -5,12 +5,12 @@ export default function PrivacyPolicy() {
     return (
         <section>
             <div className={"flex flex-col items-center justify-center gap-16 px-4 md:px-0 py-32 bg-secondary"}>
-                <div className={"space-y-4 md:space-y-8 text-center"}>
+                <hgroup className={"space-y-4 md:space-y-8 text-center"}>
                     <h3 className={"text-4xl md:text-6xl text-secondary-foreground"}>Privacy Policy</h3>
                     <p className={"max-w-xl text-muted-foreground"}>
                         Last updated: December 2025
                     </p>
-                </div>
+                </hgroup>
                 <Card className={"w-full max-w-5xl"}>
                     <CardContent>
                         <ol className="space-y-8 list-none p-0 [counter-reset:section-counter]">

@@ -5,14 +5,14 @@ import {Quote} from "lucide-react";
 export default function SuccessStoriesSection() {
     return (
         <section id={"success-stories"} className={"flex flex-col items-center justify-center gap-16 px-4 md:px-0 py-32"}>
-            <div className={"space-y-2 md:space-y-4 text-center"}>
+            <hgroup className={"space-y-2 md:space-y-4 text-center"}>
                 <h3 className={"text-4xl md:text-6xl"}>
                     Success Stories
                 </h3>
                 <p className={"max-w-xl text-muted-foreground"}>
                     Real couples who found their perfect match and built beautiful lives together
                 </p>
-            </div>
+            </hgroup>
             <Card className={"py-0 overflow-hidden"}>
                 <CardContent className={"px-0 grid grid-cols-1 md:grid-cols-2 w-full max-w-5xl"}>
                     <Image priority={false} src={"/success_story1.avif"} alt={"success story"} width={512}
