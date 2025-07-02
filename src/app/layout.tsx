@@ -2,8 +2,6 @@ import type {Metadata} from "next";
 import {Geist, Geist_Mono} from "next/font/google";
 import "./globals.css";
 import React from "react";
-import HeaderSection from "@/components/home/header-section";
-import FooterSection from "@/components/home/footer-section";
 
 const geistSans = Geist({
     variable: "--font-geist-sans",
@@ -100,11 +98,7 @@ export default function RootLayout({children,}: Readonly<{ children: React.React
         <body
             className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         >
-        <div className={"relative min-h-screen"}>
             {children}
-            <HeaderSection/>
-        </div>
-        <FooterSection/>
         </body>
         </html>
     );
