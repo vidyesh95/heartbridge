@@ -38,7 +38,7 @@ export default function FooterSection(){
                         <Link href={"/contact"}>
                             <p className={"text-primary-foreground"}>Contact us</p>
                         </Link>
-                        <Link href={"/"}>
+                        <Link href={"/privacy-policy"}>
                             <p className={"text-primary-foreground"}>Privacy policy</p>
                         </Link>
                         <Link href={"/"}>
