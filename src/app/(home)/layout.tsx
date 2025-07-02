@@ -5,7 +5,7 @@ import FooterSection from "@/components/home/footer-section";
 interface Props {
     children: React.ReactNode;
 }
-const Layout = ({ children }: Props) => {
+export default function Layout({ children }: Props) {
     return (
         <div className={"relative min-h-screen"}>
             {children}
@@ -13,6 +13,4 @@ const Layout = ({ children }: Props) => {
             <FooterSection/>
         </div>
     )
-};
-
-export default Layout;
+}
