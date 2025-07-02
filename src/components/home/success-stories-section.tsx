@@ -4,7 +4,7 @@ import {Quote} from "lucide-react";
 
 export default function SuccessStoriesSection() {
     return (
-        <section className={"flex flex-col items-center justify-center gap-16 px-4 md:px-0 py-32"}>
+        <section id={"success-stories"} className={"flex flex-col items-center justify-center gap-16 px-4 md:px-0 py-32"}>
             <div className={"space-y-2 md:space-y-4 text-center"}>
                 <h3 className={"text-4xl md:text-6xl"}>
                     Success Stories

@@ -20,10 +20,10 @@ export default function FooterSection(){
                         <Link href={"/"}>
                             <p className={"text-primary-foreground"}>Our story</p>
                         </Link>
-                        <Link href={"/"}>
+                        <Link href={"/#how-it-works"}>
                             <p className={"text-primary-foreground"}>How it works</p>
                         </Link>
-                        <Link href={"/"}>
+                        <Link href={"/#success-stories"}>
                             <p className={"text-primary-foreground"}>Success stories</p>
                         </Link>
                         <Link href={"/"}>
@@ -32,17 +32,17 @@ export default function FooterSection(){
                     </div>
                     <div>
                         <h6 className={"text-primary-foreground text-lg font-semibold mb-2"}>Help & Support</h6>
-                        <Link href={"/"}>
-                            <p className={"text-primary-foreground"}>Frequently Asked Questions</p>
+                        <Link href={"/#frequently-asked-questions"}>
+                            <p className={"text-primary-foreground"}>Frequently asked questions</p>
                         </Link>
                         <Link href={"/contact"}>
                             <p className={"text-primary-foreground"}>Contact us</p>
                         </Link>
                         <Link href={"/"}>
-                            <p className={"text-primary-foreground"}>Success stories</p>
+                            <p className={"text-primary-foreground"}>Privacy policy</p>
                         </Link>
                         <Link href={"/"}>
-                            <p className={"text-primary-foreground"}>Testimonials</p>
+                            <p className={"text-primary-foreground"}>Terms of service</p>
                         </Link>
                     </div>
                 </div>
