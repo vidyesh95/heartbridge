@@ -83,22 +83,29 @@ export default function PrivacyPolicy() {
                                 <h4 className="text-2xl font-semibold text-secondary-foreground before:content-[counter(section-counter)'.\00a0'] before:[counter-increment:section-counter]">
                                     Data Retention
                                 </h4>
-                                <p>We retain your personal information for as long as your account is active or as needed to provide you services. If you wish to delete your account, we will delete your personal information within 30 days, except where we are required to retain it for legal purposes.</p>
+                                <p>We retain your personal information for as long as your account is active or as
+                                    needed to provide you services. If you wish to delete your account, we will delete
+                                    your personal information within 30 days, except where we are required to retain it
+                                    for legal purposes.</p>
                             </li>
                             <li className="space-y-4">
                                 <h4 className="text-2xl font-semibold text-secondary-foreground before:content-[counter(section-counter)'.\00a0'] before:[counter-increment:section-counter]">
                                     Cookies and Tracking
                                 </h4>
-                                <p>We use cookies and similar tracking technologies to enhance your experience on our platform. You can control cookie settings through your browser preferences.</p>
+                                <p>We use cookies and similar tracking technologies to enhance your experience on our
+                                    platform. You can control cookie settings through your browser preferences.</p>
                             </li>
                             <li className="space-y-4">
                                 <h4 className="text-2xl font-semibold text-secondary-foreground before:content-[counter(section-counter)'.\00a0'] before:[counter-increment:section-counter]">
                                     Changes to This Policy
                                 </h4>
-                                <p>We may update this Privacy Policy from time to time. We will notify you of any material changes by posting the new Privacy Policy on this page and updating the &ldquo;Last updated&rdquo; date.</p>
+                                <p>We may update this Privacy Policy from time to time. We will notify you of any
+                                    material changes by posting the new Privacy Policy on this page and updating
+                                    the &ldquo;Last updated&rdquo; date.</p>
                             </li>
                             <li className="space-y-4">
-                                <h4 className="text-2xl font-semibold text-secondary-foreground before:content-[counter(section-counter)'.\00a0'] before:[counter-increment:section-counter]">Contact Us</h4>
+                                <h4 className="text-2xl font-semibold text-secondary-foreground before:content-[counter(section-counter)'.\00a0'] before:[counter-increment:section-counter]">Contact
+                                    Us</h4>
                                 <p>If you have any questions about this Privacy Policy, please contact us at:</p>
                                 <ul className="list-none space-y-2 text-muted-foreground">
                                     <li>Email: privacy@heartbridgeclassic.com</li>
