@@ -17,7 +17,7 @@ export default function FooterSection(){
                     </div>
                     <div>
                         <h6 className={"text-primary-foreground text-lg font-semibold mb-2"}>About</h6>
-                        <Link href={"/"}>
+                        <Link href={"/about"}>
                             <p className={"text-primary-foreground"}>Our story</p>
                         </Link>
                         <Link href={"/#how-it-works"}>
