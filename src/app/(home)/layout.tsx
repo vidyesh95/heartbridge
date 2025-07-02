@@ -5,6 +5,7 @@ import FooterSection from "@/components/home/footer-section";
 interface Props {
     children: React.ReactNode;
 }
+
 export default function Layout({ children }: Props) {
     return (
         <div className={"relative min-h-screen"}>
