@@ -26,7 +26,7 @@ export default function FooterSection(){
                         <Link href={"/#success-stories"}>
                             <p className={"text-primary-foreground"}>Success stories</p>
                         </Link>
-                        <Link href={"/"}>
+                        <Link href={"/#success-stories"}>
                             <p className={"text-primary-foreground"}>Testimonials</p>
                         </Link>
                     </div>
@@ -41,7 +41,7 @@ export default function FooterSection(){
                         <Link href={"/privacy-policy"}>
                             <p className={"text-primary-foreground"}>Privacy policy</p>
                         </Link>
-                        <Link href={"/"}>
+                        <Link href={"/terms-of-service"}>
                             <p className={"text-primary-foreground"}>Terms of service</p>
                         </Link>
                     </div>
