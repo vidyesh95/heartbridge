@@ -239,7 +239,6 @@ export default function Dashboard() {
                         <AppSidebar/>
                         <main className={"flex-1"}>
                             <SidebarTrigger/>
-                            {
                                 <div
                                     className={"w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4"}>
                                     {profiles.map((profile) => (
@@ -274,7 +273,6 @@ export default function Dashboard() {
                                         </Card>
                                     ))}
                                 </div>
-                            }
                         </main>
                     </SidebarProvider>
                 </CardContent>
