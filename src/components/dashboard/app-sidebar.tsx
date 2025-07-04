@@ -10,6 +10,7 @@ import {Checkbox} from "@/components/ui/checkbox";
 import {Slider} from "@/components/ui/slider";
 import {Input} from "@/components/ui/input";
 import {Button} from "@/components/ui/button";
+import {X} from "lucide-react";
 
 const religions = [
     {
@@ -112,10 +113,9 @@ const education = [
 export function AppSidebar() {
     return (
         <Sidebar>
-            <SidebarHeader>
+            <SidebarHeader className={"flex flex-row items-center justify-between gap-4 px-4 py-4 md:pt-16"}>
                 <h4 className={"text-2xl font-semibold text-primary"}>Filters</h4>
-                <Button variant={"destructive"} className={"w-full text-center"}>Reset</Button>
-                <Button className={"w-full text-center"}>Apply Filter</Button>
+                <Button variant={"destructive"} className={"w-auto"}><X/></Button>
             </SidebarHeader>
             <SidebarContent>
                 <SidebarGroup>
@@ -156,7 +156,7 @@ export function AppSidebar() {
                 </SidebarGroup>
             </SidebarContent>
             <SidebarFooter>
-                <Button variant={"destructive"} className={"w-full text-center"}>Reset</Button>
+                <Button variant={"outline"} className={"w-full text-center"}>Reset</Button>
                 <Button className={"w-full text-center"}>Apply Filter</Button>
             </SidebarFooter>
         </Sidebar>
