@@ -121,13 +121,13 @@ export function AppSidebar() {
                 <SidebarGroup>
                     <SidebarGroupLabel>Age range</SidebarGroupLabel>
                     <SidebarGroupContent>
-                        <Slider min={18} max={118} step={1}/>
+                        <Slider defaultValue={[23, 30]} min={18} max={118} step={1}/>
                     </SidebarGroupContent>
                 </SidebarGroup>
                 <SidebarGroup>
                     <SidebarGroupLabel>Salary range</SidebarGroupLabel>
                     <SidebarGroupContent>
-                        <Slider min={0} max={100000000} step={1}/>
+                        <Slider defaultValue={[600000, 1200000]} min={0} max={100000000} step={1}/>
                     </SidebarGroupContent>
                 </SidebarGroup>
                 <SidebarGroup>

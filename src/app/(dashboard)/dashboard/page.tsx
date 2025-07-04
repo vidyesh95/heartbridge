@@ -233,39 +233,49 @@ export default function Dashboard() {
                     6 profiles match your preferences
                 </p>
             </hgroup>
-            <div className={"p-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4"}>
-                {profiles.map((profile) => (
-                    <Card className={"pt-0 overflow-hidden"} key={profile.id}>
-                        <CardHeader className={"px-0"}>
-                            <Image
-                                src={profile.imageUrl}
-                                height={341}
-                                width={341}
-                                alt={"Display Image"}
-                                className={"w-full aspect-square object-cover"}/>
-                        </CardHeader>
-                        <CardContent>
-                            <h5 className={"text-lg font-semibold text-primary mb-2"}>{profile.name}</h5>
-                            <p>
-                                <span>{profile.age}</span>
-                                &nbsp;•&nbsp;
-                                <span>{profile.height}</span>
-                                &nbsp;•&nbsp;
-                                <span>{profile.location}</span>
-                            </p>
-                            <p>Annual income:&nbsp;<span>{profile.annualIncome}</span></p>
-                            <p>Religion:&nbsp;<span>{profile.religion}</span></p>
-                            <p>Education:&nbsp;<span>{profile.education}</span></p>
-                            <p>Profession:&nbsp;<span>{profile.profession}</span></p>
-                        </CardContent>
-                        <CardFooter className={"space-x-4"}>
-                            <Button variant={"outline"}><Heart/>Like</Button>
-                            <Button variant={"outline"}><Bookmark/></Button>
-                            <Button variant={"outline"}><Eye/></Button>
-                        </CardFooter>
-                    </Card>
-                ))}
-            </div>
+
+            <SidebarProvider>
+                <AppSidebar/>
+                <main>
+                    <SidebarTrigger/>
+                    {
+                        <div
+                            className={"p-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4"}>
+                            {profiles.map((profile) => (
+                                <Card className={"pt-0 overflow-hidden"} key={profile.id}>
+                                    <CardHeader className={"px-0"}>
+                                        <Image
+                                            src={profile.imageUrl}
+                                            height={341}
+                                            width={341}
+                                            alt={"Display Image"}
+                                            className={"w-full aspect-square object-cover"}/>
+                                    </CardHeader>
+                                    <CardContent>
+                                        <h5 className={"text-lg font-semibold text-primary mb-2"}>{profile.name}</h5>
+                                        <p>
+                                            <span>{profile.age}</span>
+                                            &nbsp;•&nbsp;
+                                            <span>{profile.height}</span>
+                                            &nbsp;•&nbsp;
+                                            <span>{profile.location}</span>
+                                        </p>
+                                        <p>Annual income:&nbsp;<span>{profile.annualIncome}</span></p>
+                                        <p>Religion:&nbsp;<span>{profile.religion}</span></p>
+                                        <p>Education:&nbsp;<span>{profile.education}</span></p>
+                                        <p>Profession:&nbsp;<span>{profile.profession}</span></p>
+                                    </CardContent>
+                                    <CardFooter className={"space-x-4"}>
+                                        <Button variant={"outline"}><Heart/>Like</Button>
+                                        <Button variant={"outline"}><Bookmark/></Button>
+                                        <Button variant={"outline"}><Eye/></Button>
+                                    </CardFooter>
+                                </Card>
+                            ))}
+                        </div>
+                    }
+                </main>
+            </SidebarProvider>
         </section>
     )
 }
