@@ -1,10 +1,12 @@
+'use client'
+
 import {
     Sidebar,
     SidebarContent,
     SidebarFooter,
     SidebarGroup,
     SidebarGroupContent,
-    SidebarGroupLabel, SidebarHeader
+    SidebarGroupLabel, SidebarHeader, useSidebar
 } from "@/components/ui/sidebar"
 import {Checkbox} from "@/components/ui/checkbox";
 import {Slider} from "@/components/ui/slider";
@@ -110,12 +112,14 @@ const education = [
     }
 ]
 
-export function AppSidebar() {
+export function AppSidebar(){
+    const {setOpen} = useSidebar()
     return (
         <Sidebar>
             <SidebarHeader className={"flex flex-row items-center justify-between gap-4 px-4 py-4 md:pt-16"}>
                 <h4 className={"text-2xl font-semibold text-primary"}>Filters</h4>
-                <Button variant={"destructive"} className={"w-auto"}><X/></Button>
+                <Button variant={"destructive"} className={"w-auto"}
+                onClick={() => setOpen(false)}><X/></Button>
             </SidebarHeader>
             <SidebarContent>
                 <SidebarGroup>
