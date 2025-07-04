@@ -13,6 +13,7 @@ import {Slider} from "@/components/ui/slider";
 import {Input} from "@/components/ui/input";
 import {Button} from "@/components/ui/button";
 import {X} from "lucide-react";
+import { useState } from "react";
 
 const religions = [
     {
@@ -114,6 +115,7 @@ const education = [
 
 export function AppSidebar(){
     const {setOpen} = useSidebar()
+    const [ageRange, setAgeRange] = useState<[number, number]>([23, 30])
     return (
         <Sidebar>
             <SidebarHeader className={"flex flex-row items-center justify-between gap-4 px-4 py-4 md:pt-16"}>
@@ -130,7 +132,17 @@ export function AppSidebar(){
                 <SidebarGroup>
                     <SidebarGroupLabel>Age range</SidebarGroupLabel>
                     <SidebarGroupContent>
-                        <Slider defaultValue={[23, 30]} min={18} max={118} step={1}/>
+                      <div className="mb-2 flex justify-between text-xs font-medium">
+                        <span>{ageRange[0]}</span>
+                        <span>{ageRange[1]}</span>
+                      </div>
+                      <Slider
+                        value={ageRange}
+                        onValueChange={(val) => setAgeRange(val as [number, number])}
+                        min={18}
+                        max={118}
+                        step={1}
+                      />
                     </SidebarGroupContent>
                 </SidebarGroup>
                 <SidebarGroup>
