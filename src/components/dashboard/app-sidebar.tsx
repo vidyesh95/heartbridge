@@ -119,6 +119,7 @@ export function AppSidebar(){
     const [salaryRange, setSalaryRange] = useState<[number, number]>([600_000, 1_200_000]);
     const [heightRange, setHeightRange] = useState<[number, number]>([5, 7]);
     const [selectedReligions, setSelectedReligions] = useState<number[]>([]);
+    const [selectedEducations, setSelectedEducations] = useState<number[]>([]);
     return (
         <Sidebar>
             <SidebarHeader className={"flex flex-row items-center justify-between gap-4 px-4 py-4 md:pt-16"}>
@@ -211,8 +212,25 @@ export function AppSidebar(){
                 </SidebarGroup>
                 <SidebarGroup>
                     <SidebarGroupLabel>Education</SidebarGroupLabel>
-                    <SidebarGroupContent>
-                        <Checkbox/>
+                    <SidebarGroupContent className="space-y-2">
+                        {education.map(({ id, education }) => (
+                            <label
+                                key={id}
+                                htmlFor={`education-${id}`}
+                                className="flex items-center gap-2 text-sm cursor-pointer select-none"
+                            >
+                                <Checkbox
+                                    id={`education-${id}`}
+                                    checked={selectedEducations.includes(id)}
+                                    onCheckedChange={(checked) =>
+                                        setSelectedEducations((previous) =>
+                                            checked ? [...previous, id] : previous.filter((educationId) => educationId !== id)
+                                        )
+                                    }
+                                />
+                                <span>{education}</span>
+                            </label>
+                        ))}
                     </SidebarGroupContent>
                 </SidebarGroup>
             </SidebarContent>
