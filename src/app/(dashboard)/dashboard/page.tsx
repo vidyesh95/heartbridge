@@ -2,6 +2,8 @@ import Image from "next/image";
 import {Card, CardContent, CardFooter, CardHeader} from "@/components/ui/card";
 import {Button} from "@/components/ui/button";
 import {Bookmark, Eye, Heart} from "lucide-react";
+import {SidebarProvider, SidebarTrigger, SidebarInset} from "@/components/ui/sidebar";
+import {AppSidebar} from "@/components/dashboard/app-sidebar";
 
 const profiles = [
     {
@@ -231,7 +233,7 @@ export default function Dashboard() {
                     6 profiles match your preferences
                 </p>
             </hgroup>
-            <div className={"grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4"}>
+            <div className={"p-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4"}>
                 {profiles.map((profile) => (
                     <Card className={"pt-0 overflow-hidden"} key={profile.id}>
                         <CardHeader className={"px-0"}>
