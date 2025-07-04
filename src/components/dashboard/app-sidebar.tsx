@@ -116,6 +116,8 @@ const education = [
 export function AppSidebar(){
     const {setOpen} = useSidebar()
     const [ageRange, setAgeRange] = useState<[number, number]>([23, 30])
+    const [salaryRange, setSalaryRange] = useState<[number, number]>([600_000, 1_200_000]);
+    const [heightRange, setHeightRange] = useState<[number, number]>([5, 7]);
     return (
         <Sidebar>
             <SidebarHeader className={"flex flex-row items-center justify-between gap-4 px-4 py-4 md:pt-16"}>
@@ -138,7 +140,7 @@ export function AppSidebar(){
                       </div>
                       <Slider
                         value={ageRange}
-                        onValueChange={(val) => setAgeRange(val as [number, number])}
+                        onValueChange={(value) => setAgeRange(value as [number, number])}
                         min={18}
                         max={118}
                         step={1}
@@ -148,13 +150,33 @@ export function AppSidebar(){
                 <SidebarGroup>
                     <SidebarGroupLabel>Salary range</SidebarGroupLabel>
                     <SidebarGroupContent>
-                        <Slider defaultValue={[600000, 1200000]} min={0} max={100000000} step={1}/>
+                      <div className="mb-2 flex justify-between text-xs font-medium">
+                        <span>₹{salaryRange[0].toLocaleString()}</span>
+                        <span>₹{salaryRange[1].toLocaleString()}</span>
+                      </div>
+                      <Slider
+                        value={salaryRange}
+                        onValueChange={(value) => setSalaryRange(value as [number, number])}
+                        min={0}
+                        max={10_000_000}
+                        step={50_000}
+                      />
                     </SidebarGroupContent>
                 </SidebarGroup>
                 <SidebarGroup>
                     <SidebarGroupLabel>Height range</SidebarGroupLabel>
                     <SidebarGroupContent>
-                        <Slider defaultValue={[5,7]} min={0} max={20} step={1}/>
+                      <div className="mb-2 flex justify-between text-xs font-medium">
+                        <span>{heightRange[0]}&apos;</span>
+                        <span>{heightRange[1]}&apos;</span>
+                      </div>
+                      <Slider
+                        value={heightRange}
+                        onValueChange={(value) => setHeightRange(value as [number, number])}
+                        min={4}
+                        max={8}
+                        step={0.1}
+                      />
                     </SidebarGroupContent>
                 </SidebarGroup>
                 <SidebarGroup>
