@@ -118,8 +118,13 @@ export function AppSidebar(){
         <Sidebar>
             <SidebarHeader className={"flex flex-row items-center justify-between gap-4 px-4 py-4 md:pt-16"}>
                 <h4 className={"text-2xl font-semibold text-primary"}>Filters</h4>
-                <Button variant={"destructive"} className={"w-auto"}
-                onClick={() => setOpen(false)}><X/></Button>
+                <Button
+                    variant={"destructive"}
+                    className={"w-auto cursor-pointer"}
+                    onClick={() => setOpen(false)}
+                >
+                    <X/>
+                </Button>
             </SidebarHeader>
             <SidebarContent>
                 <SidebarGroup>
