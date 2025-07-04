@@ -7,13 +7,13 @@ const profiles = [
     {
         id: 1,
         imageUrl: "/profile1.avif",
-        name: "Priya Sharma",
-        age: "26",
-        height: "5'4\"",
-        location: "Mumbai",
-        annualIncome: "₹600,000",
+        name: "Karan Kapoor",
+        age: "29",
+        height: "6'1\"",
+        location: "Dehradun",
+        annualIncome: "₹680,000",
         religion: "Hindu",
-        education: "MBA",
+        education: "Diploma",
         profession: "Software Engineer"
     },
     {
@@ -139,13 +139,13 @@ const profiles = [
     {
         id: 12,
         imageUrl: "/profile12.avif",
-        name: "Karan Kapoor",
-        age: "29",
-        height: "6'1\"",
-        location: "Dehradun",
-        annualIncome: "₹680,000",
+        name: "Priya Sharma",
+        age: "26",
+        height: "5'4\"",
+        location: "Mumbai",
+        annualIncome: "₹600,000",
         religion: "Hindu",
-        education: "Diploma",
+        education: "MBA",
         profession: "Software Engineer"
     },
     {
@@ -235,8 +235,12 @@ export default function Dashboard() {
                 {profiles.map((profile) => (
                     <Card className={"pt-0 overflow-hidden"} key={profile.id}>
                         <CardHeader className={"px-0"}>
-                            <Image src={profile.imageUrl} width={256} height={256} alt={"Display Image"}
-                                   className={"w-64 h-64 object-cover"}/>
+                            <Image
+                                src={profile.imageUrl}
+                                height={341}
+                                width={341}
+                                alt={"Display Image"}
+                                className={"w-full aspect-square object-cover"}/>
                         </CardHeader>
                         <CardContent>
                             <h5 className={"text-lg font-semibold text-primary mb-2"}>{profile.name}</h5>
