@@ -12,12 +12,16 @@ export default function Dashboard() {
                     6 profiles match your preferences
                 </p>
             </hgroup>
-            <Card className={"pt-0"}>
+            <Card className={"pt-0 overflow-hidden"}>
                 <CardHeader className={"px-0"}>
                     <Image src={"/profile3.avif"} width={256} height={256} alt={"Display Image"} className={"w-64 h-64 object-cover"}/>
                 </CardHeader>
                 <CardContent>
-                    <p>Card Content</p>
+                    <h5 className={"text-lg font-semibold text-primary mb-2"}>Priya Sharma</h5>
+                    <p><span>26</span>&nbsp;•&nbsp;<span>5&apos;4&quot;</span>&nbsp;•&nbsp;<span>Mumbai</span></p>
+                    <p>Religion:&nbsp;<span>Hindu</span></p>
+                    <p>Education:&nbsp;<span>MBA from IIM Mumbai</span></p>
+                    <p>Profession:&nbsp;<span>Software Engineer</span></p>
                 </CardContent>
                 <CardFooter className={"space-x-4"}>
                     <Button variant={"outline"}><Heart/>Like</Button>
