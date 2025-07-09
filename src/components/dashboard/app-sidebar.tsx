@@ -327,34 +327,34 @@ export function AppSidebar() {
                                         <SidebarGroupContent className="space-y-2">
                                             {religions.map(
                                                 ({id, religion}) => {
-                                                const checked = field.value.includes(id)
-                                                return(
-                                                    <FormItem
-                                                        key={id}
-                                                        className="flex items-center gap-2 text-sm cursor-pointer select-none"
-                                                    >
-                                                        <FormControl>
-                                                            <Checkbox
-                                                                id={`religion-${id}`}
-                                                                checked={checked}
-                                                                onCheckedChange={
-                                                                    (isChecked) => {
-                                                                        const next = new Set<number>(field.value)
-                                                                        if (isChecked) {
-                                                                            next.add(id);
-                                                                        } else {
-                                                                            next.delete(id);
+                                                    const checked = field.value.includes(id)
+                                                    return (
+                                                        <FormItem
+                                                            key={id}
+                                                            className="flex items-center gap-2 text-sm cursor-pointer select-none"
+                                                        >
+                                                            <FormControl>
+                                                                <Checkbox
+                                                                    id={`religion-${id}`}
+                                                                    checked={checked}
+                                                                    onCheckedChange={
+                                                                        (isChecked) => {
+                                                                            const next = new Set<number>(field.value)
+                                                                            if (isChecked) {
+                                                                                next.add(id);
+                                                                            } else {
+                                                                                next.delete(id);
+                                                                            }
+                                                                            field.onChange(Array.from(next))
                                                                         }
-                                                                        field.onChange(Array.from(next))
                                                                     }
-                                                                }
-                                                            />
-                                                        </FormControl>
-                                                        <FormLabel htmlFor={`religion-${id}`}>{religion}</FormLabel>
-                                                        <FormMessage/>
-                                                    </FormItem>
-                                                )
-                                            })}
+                                                                />
+                                                            </FormControl>
+                                                            <FormLabel htmlFor={`religion-${id}`}>{religion}</FormLabel>
+                                                            <FormMessage/>
+                                                        </FormItem>
+                                                    )
+                                                })}
                                         </SidebarGroupContent>
                                     </SidebarGroup>
                                 )
@@ -385,11 +385,11 @@ export function AppSidebar() {
                         <FormField
                             control={form.control}
                             name="selectedEducations"
-                            render={({ field }) => (
+                            render={({field}) => (
                                 <SidebarGroup>
                                     <SidebarGroupLabel>Education</SidebarGroupLabel>
                                     <SidebarGroupContent className="space-y-2">
-                                        {education.map(({ id, education: educationLabel }) => {
+                                        {education.map(({id, education: educationLabel}) => {
                                             const checked = field.value.includes(id);
                                             return (
                                                 <FormItem
@@ -412,6 +412,7 @@ export function AppSidebar() {
                                                         />
                                                     </FormControl>
                                                     <FormLabel htmlFor={`education-${id}`}>{educationLabel}</FormLabel>
+                                                    <FormMessage/>
                                                 </FormItem>
                                             );
                                         })}
