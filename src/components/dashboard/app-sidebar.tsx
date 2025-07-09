@@ -120,24 +120,24 @@ const education = [
 const formSchema = z.object({
     ageRange: z
         .tuple([
-            z.number().min(18, {message: "Minimum age is 18"}),
-            z.number().max(118, {message: "Maximum age is 118"}),
+            z.number().min(18, {error: "Minimum age is 18"}),
+            z.number().max(118, {error: "Maximum age is 118"}),
         ])
         .refine(([min, max]) => min <= max, {
-            message: "Min age cannot exceed max age",
+            error: "Min age cannot exceed max age",
         }),
     salaryRange: z
         .tuple([z.number().min(0), z.number().min(0)])
         .refine(([min, max]) => min <= max, {
-            message: "Min salary cannot exceed max salary",
+            error: "Min salary cannot exceed max salary",
         }),
     heightRange: z
         .tuple([
-            z.number().min(4, {message: "Minimum height is 4'"}),
-            z.number().max(8, {message: "Maximum height is 8'"}),
+            z.number().min(4, {error: "Minimum height is 4'"}),
+            z.number().max(8, {error: "Maximum height is 8'"}),
         ])
         .refine(([min, max]) => min <= max, {
-            message: "Min height cannot exceed max height",
+            error: "Min height cannot exceed max height",
         }),
     location: z.string().optional(),
     selectedReligions: z.array(z.number()),
