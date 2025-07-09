@@ -19,7 +19,7 @@ import {useState} from "react";
 import {z} from "zod/v4";
 import {useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
-import {Form, FormControl, FormField, FormItem, FormLabel} from "@/components/ui/form";
+import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from "@/components/ui/form";
 import {RadioGroup, RadioGroupItem} from "@/components/ui/radio-group";
 
 const genders = [
@@ -218,10 +218,14 @@ export function AppSidebar() {
                                             {genders.map(({id, gender}) => (
                                                 <FormItem key={id} className="flex items-center gap-2">
                                                     <FormControl>
-                                                        <RadioGroupItem {...field} value={id.toString()}
-                                                                        id={`gender-${id}`}/>
+                                                        <RadioGroupItem
+                                                            {...field}
+                                                            value={id.toString()}
+                                                            id={`gender-${id}`}
+                                                        />
                                                     </FormControl>
                                                     <FormLabel htmlFor={`gender-${id}`}>{gender}</FormLabel>
+                                                    <FormMessage/>
                                                 </FormItem>
                                             ))}
                                         </RadioGroup>
