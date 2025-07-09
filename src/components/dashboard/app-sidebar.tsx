@@ -13,7 +13,11 @@ import {Slider} from "@/components/ui/slider";
 import {Input} from "@/components/ui/input";
 import {Button} from "@/components/ui/button";
 import {X} from "lucide-react";
-import { useState } from "react";
+import {useState} from "react";
+import {z} from "zod/v4";
+import {useForm} from "react-hook-form";
+import {zodResolver} from "@hookform/resolvers/zod";
+import {Form} from "@/components/ui/form";
 
 const religions = [
     {
@@ -113,131 +117,179 @@ const education = [
     }
 ]
 
-export function AppSidebar(){
+const formSchema = z.object({
+    ageRange: z
+        .tuple([
+            z.number().min(18, {message: "Minimum age is 18"}),
+            z.number().max(118, {message: "Maximum age is 118"}),
+        ])
+        .refine(([min, max]) => min <= max, {
+            message: "Min age cannot exceed max age",
+        }),
+    salaryRange: z
+        .tuple([z.number().min(0), z.number().min(0)])
+        .refine(([min, max]) => min <= max, {
+            message: "Min salary cannot exceed max salary",
+        }),
+    heightRange: z
+        .tuple([
+            z.number().min(4, {message: "Minimum height is 4'"}),
+            z.number().max(8, {message: "Maximum height is 8'"}),
+        ])
+        .refine(([min, max]) => min <= max, {
+            message: "Min height cannot exceed max height",
+        }),
+    location: z.string().optional(),
+    selectedReligions: z.array(z.number()),
+    selectedEducations: z.array(z.number()),
+})
+
+type FormValues = z.infer<typeof formSchema>;
+
+export function AppSidebar() {
     const {setOpen} = useSidebar()
     const [ageRange, setAgeRange] = useState<[number, number]>([23, 30])
     const [salaryRange, setSalaryRange] = useState<[number, number]>([600_000, 1_200_000]);
     const [heightRange, setHeightRange] = useState<[number, number]>([5, 7]);
     const [selectedReligions, setSelectedReligions] = useState<number[]>([]);
     const [selectedEducations, setSelectedEducations] = useState<number[]>([]);
+    const form = useForm<FormValues>({
+        resolver: zodResolver(formSchema),
+        defaultValues: {
+            ageRange: [23, 30],
+            salaryRange: [600_000, 1_200_000],
+            heightRange: [5, 7],
+            selectedReligions: [],
+            selectedEducations: []
+        },
+    })
+
+    function onSubmit(values: FormValues) {
+        console.log(values);
+    }
+
     return (
-        <Sidebar>
-            <SidebarHeader className={"flex flex-row items-center justify-between gap-4 px-4 py-4 md:pt-16"}>
-                <h4 className={"text-2xl font-semibold text-primary"}>Filters</h4>
-                <Button
-                    variant={"destructive"}
-                    className={"w-auto cursor-pointer"}
-                    onClick={() => setOpen(false)}
-                >
-                    <X/>
-                </Button>
-            </SidebarHeader>
-            <SidebarContent>
-                <SidebarGroup>
-                    <SidebarGroupLabel>Age range</SidebarGroupLabel>
-                    <SidebarGroupContent>
-                      <div className="mb-2 flex justify-between text-xs font-medium">
-                        <span>{ageRange[0]}</span>
-                        <span>{ageRange[1]}</span>
-                      </div>
-                      <Slider
-                        value={ageRange}
-                        onValueChange={(value) => setAgeRange(value as [number, number])}
-                        min={18}
-                        max={118}
-                        step={1}
-                      />
-                    </SidebarGroupContent>
-                </SidebarGroup>
-                <SidebarGroup>
-                    <SidebarGroupLabel>Salary range</SidebarGroupLabel>
-                    <SidebarGroupContent>
-                      <div className="mb-2 flex justify-between text-xs font-medium">
-                        <span>₹{salaryRange[0].toLocaleString()}</span>
-                        <span>₹{salaryRange[1].toLocaleString()}</span>
-                      </div>
-                      <Slider
-                        value={salaryRange}
-                        onValueChange={(value) => setSalaryRange(value as [number, number])}
-                        min={0}
-                        max={10_000_000}
-                        step={50_000}
-                      />
-                    </SidebarGroupContent>
-                </SidebarGroup>
-                <SidebarGroup>
-                    <SidebarGroupLabel>Height range</SidebarGroupLabel>
-                    <SidebarGroupContent>
-                      <div className="mb-2 flex justify-between text-xs font-medium">
-                        <span>{heightRange[0]}&apos;</span>
-                        <span>{heightRange[1]}&apos;</span>
-                      </div>
-                      <Slider
-                        value={heightRange}
-                        onValueChange={(value) => setHeightRange(value as [number, number])}
-                        min={4}
-                        max={8}
-                        step={0.1}
-                      />
-                    </SidebarGroupContent>
-                </SidebarGroup>
-                <SidebarGroup>
-                    <SidebarGroupLabel>Religion</SidebarGroupLabel>
-                    <SidebarGroupContent className="space-y-2">
-                      {religions.map(({ id, religion }) => (
-                        <label
-                          key={id}
-                          htmlFor={`religion-${id}`}
-                          className="flex items-center gap-2 text-sm cursor-pointer select-none"
+        <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)}>
+                <Sidebar>
+                    <SidebarHeader className={"flex flex-row items-center justify-between gap-4 px-4 py-4 md:pt-16"}>
+                        <h4 className={"text-2xl font-semibold text-primary"}>Filters</h4>
+                        <Button
+                            variant={"destructive"}
+                            className={"w-auto cursor-pointer"}
+                            onClick={() => setOpen(false)}
                         >
-                          <Checkbox
-                            id={`religion-${id}`}
-                            checked={selectedReligions.includes(id)}
-                            onCheckedChange={(checked) =>
-                              setSelectedReligions(
-                                  (previous) => checked ? [...previous, id] : previous.filter((religionId) => religionId !== id)
-                              )
-                            }
-                          />
-                          <span>{religion}</span>
-                        </label>
-                      ))}
-                    </SidebarGroupContent>
-                </SidebarGroup>
-                <SidebarGroup>
-                    <SidebarGroupLabel>Location</SidebarGroupLabel>
-                    <SidebarGroupContent>
-                        <Input type={"text"} placeholder={"Enter City"}/>
-                    </SidebarGroupContent>
-                </SidebarGroup>
-                <SidebarGroup>
-                    <SidebarGroupLabel>Education</SidebarGroupLabel>
-                    <SidebarGroupContent className="space-y-2">
-                        {education.map(({ id, education }) => (
-                            <label
-                                key={id}
-                                htmlFor={`education-${id}`}
-                                className="flex items-center gap-2 text-sm cursor-pointer select-none"
-                            >
-                                <Checkbox
-                                    id={`education-${id}`}
-                                    checked={selectedEducations.includes(id)}
-                                    onCheckedChange={(checked) =>
-                                        setSelectedEducations((previous) =>
-                                            checked ? [...previous, id] : previous.filter((educationId) => educationId !== id)
-                                        )
-                                    }
+                            <X/>
+                        </Button>
+                    </SidebarHeader>
+                    <SidebarContent>
+                        <SidebarGroup>
+                            <SidebarGroupLabel>Age range</SidebarGroupLabel>
+                            <SidebarGroupContent>
+                                <div className="mb-2 flex justify-between text-xs font-medium">
+                                    <span>{ageRange[0]}</span>
+                                    <span>{ageRange[1]}</span>
+                                </div>
+                                <Slider
+                                    value={ageRange}
+                                    onValueChange={(value) => setAgeRange(value as [number, number])}
+                                    min={18}
+                                    max={118}
+                                    step={1}
                                 />
-                                <span>{education}</span>
-                            </label>
-                        ))}
-                    </SidebarGroupContent>
-                </SidebarGroup>
-            </SidebarContent>
-            <SidebarFooter>
-                <Button variant={"outline"} className={"w-full text-center"}>Reset</Button>
-                <Button className={"w-full text-center"}>Apply Filter</Button>
-            </SidebarFooter>
-        </Sidebar>
+                            </SidebarGroupContent>
+                        </SidebarGroup>
+                        <SidebarGroup>
+                            <SidebarGroupLabel>Salary range</SidebarGroupLabel>
+                            <SidebarGroupContent>
+                                <div className="mb-2 flex justify-between text-xs font-medium">
+                                    <span>₹{salaryRange[0].toLocaleString()}</span>
+                                    <span>₹{salaryRange[1].toLocaleString()}</span>
+                                </div>
+                                <Slider
+                                    value={salaryRange}
+                                    onValueChange={(value) => setSalaryRange(value as [number, number])}
+                                    min={0}
+                                    max={10_000_000}
+                                    step={50_000}
+                                />
+                            </SidebarGroupContent>
+                        </SidebarGroup>
+                        <SidebarGroup>
+                            <SidebarGroupLabel>Height range</SidebarGroupLabel>
+                            <SidebarGroupContent>
+                                <div className="mb-2 flex justify-between text-xs font-medium">
+                                    <span>{heightRange[0]}&apos;</span>
+                                    <span>{heightRange[1]}&apos;</span>
+                                </div>
+                                <Slider
+                                    value={heightRange}
+                                    onValueChange={(value) => setHeightRange(value as [number, number])}
+                                    min={4}
+                                    max={8}
+                                    step={0.1}
+                                />
+                            </SidebarGroupContent>
+                        </SidebarGroup>
+                        <SidebarGroup>
+                            <SidebarGroupLabel>Religion</SidebarGroupLabel>
+                            <SidebarGroupContent className="space-y-2">
+                                {religions.map(({id, religion}) => (
+                                    <label
+                                        key={id}
+                                        htmlFor={`religion-${id}`}
+                                        className="flex items-center gap-2 text-sm cursor-pointer select-none"
+                                    >
+                                        <Checkbox
+                                            id={`religion-${id}`}
+                                            checked={selectedReligions.includes(id)}
+                                            onCheckedChange={(checked) =>
+                                                setSelectedReligions(
+                                                    (previous) => checked ? [...previous, id] : previous.filter((religionId) => religionId !== id)
+                                                )
+                                            }
+                                        />
+                                        <span>{religion}</span>
+                                    </label>
+                                ))}
+                            </SidebarGroupContent>
+                        </SidebarGroup>
+                        <SidebarGroup>
+                            <SidebarGroupLabel>Location</SidebarGroupLabel>
+                            <SidebarGroupContent>
+                                <Input type={"text"} placeholder={"Enter City"}/>
+                            </SidebarGroupContent>
+                        </SidebarGroup>
+                        <SidebarGroup>
+                            <SidebarGroupLabel>Education</SidebarGroupLabel>
+                            <SidebarGroupContent className="space-y-2">
+                                {education.map(({id, education}) => (
+                                    <label
+                                        key={id}
+                                        htmlFor={`education-${id}`}
+                                        className="flex items-center gap-2 text-sm cursor-pointer select-none"
+                                    >
+                                        <Checkbox
+                                            id={`education-${id}`}
+                                            checked={selectedEducations.includes(id)}
+                                            onCheckedChange={(checked) =>
+                                                setSelectedEducations((previous) =>
+                                                    checked ? [...previous, id] : previous.filter((educationId) => educationId !== id)
+                                                )
+                                            }
+                                        />
+                                        <span>{education}</span>
+                                    </label>
+                                ))}
+                            </SidebarGroupContent>
+                        </SidebarGroup>
+                    </SidebarContent>
+                    <SidebarFooter>
+                        <Button type={"reset"} variant={"outline"} className={"w-full text-center"}>Reset</Button>
+                        <Button type={"submit"} className={"w-full text-center"}>Apply Filter</Button>
+                    </SidebarFooter>
+                </Sidebar>
+            </form>
+        </Form>
     )
 }
