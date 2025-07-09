@@ -293,22 +293,36 @@ export function AppSidebar() {
                                 )
                             }
                         />
-                        <SidebarGroup>
-                            <SidebarGroupLabel>Height range</SidebarGroupLabel>
-                            <SidebarGroupContent>
-                                <div className="mb-2 flex justify-between text-xs font-medium">
-                                    <span>{heightRange[0]}&apos;</span>
-                                    <span>{heightRange[1]}&apos;</span>
-                                </div>
-                                <Slider
-                                    value={heightRange}
-                                    onValueChange={(value) => setHeightRange(value as [number, number])}
-                                    min={4}
-                                    max={8}
-                                    step={0.1}
-                                />
-                            </SidebarGroupContent>
-                        </SidebarGroup>
+                        <FormField
+                            control={form.control}
+                            name="heightRange"
+                            render={
+                                ({field}) => (
+                                    <SidebarGroup>
+                                        <SidebarGroupLabel>Height range</SidebarGroupLabel>
+                                        <SidebarGroupContent>
+                                            <FormItem>
+                                                <div className="mb-2 flex justify-between text-xs font-medium">
+                                                    <span>{heightRange[0]}&apos;</span>
+                                                    <span>{heightRange[1]}&apos;</span>
+                                                </div>
+                                                <FormControl>
+                                                    <Slider
+                                                        {...field}
+                                                        value={heightRange}
+                                                        onValueChange={(value) => setHeightRange(value as [number, number])}
+                                                        min={4}
+                                                        max={8}
+                                                        step={0.1}
+                                                    />
+                                                </FormControl>
+                                                <FormMessage/>
+                                            </FormItem>
+                                        </SidebarGroupContent>
+                                    </SidebarGroup>
+                                )
+                            }
+                        />
                         <SidebarGroup>
                             <SidebarGroupLabel>Religion</SidebarGroupLabel>
                             <SidebarGroupContent className="space-y-2">
