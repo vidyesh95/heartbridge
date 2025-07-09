@@ -233,22 +233,36 @@ export function AppSidebar() {
                                 </SidebarGroup>
                             )}
                         />
-                        <SidebarGroup>
-                            <SidebarGroupLabel>Age range</SidebarGroupLabel>
-                            <SidebarGroupContent>
-                                <div className="mb-2 flex justify-between text-xs font-medium">
-                                    <span>{ageRange[0]}</span>
-                                    <span>{ageRange[1]}</span>
-                                </div>
-                                <Slider
-                                    value={ageRange}
-                                    onValueChange={(value) => setAgeRange(value as [number, number])}
-                                    min={18}
-                                    max={118}
-                                    step={1}
-                                />
-                            </SidebarGroupContent>
-                        </SidebarGroup>
+                        <FormField
+                            control={form.control}
+                            name="ageRange"
+                            render={
+                                ({field}) => (
+                                    <SidebarGroup>
+                                        <SidebarGroupLabel>Age range</SidebarGroupLabel>
+                                        <SidebarGroupContent>
+                                            <FormItem>
+                                                <div className="mb-2 flex justify-between text-xs font-medium">
+                                                    <span>{ageRange[0]}</span>
+                                                    <span>{ageRange[1]}</span>
+                                                </div>
+                                                <FormControl>
+                                                    <Slider
+                                                        {...field}
+                                                        value={ageRange}
+                                                        onValueChange={(value) => setAgeRange(value as [number, number])}
+                                                        min={18}
+                                                        max={118}
+                                                        step={1}
+                                                    />
+                                                </FormControl>
+                                                <FormMessage/>
+                                            </FormItem>
+                                        </SidebarGroupContent>
+                                    </SidebarGroup>
+                                )
+                            }
+                        />
                         <SidebarGroup>
                             <SidebarGroupLabel>Salary range</SidebarGroupLabel>
                             <SidebarGroupContent>
