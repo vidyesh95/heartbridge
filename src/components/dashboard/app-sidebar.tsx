@@ -422,7 +422,14 @@ export function AppSidebar() {
                         />
                     </SidebarContent>
                     <SidebarFooter>
-                        <Button type={"reset"} variant={"outline"} className={"w-full text-center"}>Reset</Button>
+                        <Button
+                            type={"button"}
+                            variant={"outline"}
+                            className={"w-full text-center"}
+                            onClick={() => form.reset()}
+                        >
+                            Reset
+                        </Button>
                         <Button type={"submit"} className={"w-full text-center"}>Apply Filter</Button>
                     </SidebarFooter>
                 </Sidebar>
