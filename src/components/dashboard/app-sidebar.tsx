@@ -263,22 +263,36 @@ export function AppSidebar() {
                                 )
                             }
                         />
-                        <SidebarGroup>
-                            <SidebarGroupLabel>Salary range</SidebarGroupLabel>
-                            <SidebarGroupContent>
-                                <div className="mb-2 flex justify-between text-xs font-medium">
-                                    <span>₹{salaryRange[0].toLocaleString()}</span>
-                                    <span>₹{salaryRange[1].toLocaleString()}</span>
-                                </div>
-                                <Slider
-                                    value={salaryRange}
-                                    onValueChange={(value) => setSalaryRange(value as [number, number])}
-                                    min={0}
-                                    max={10_000_000}
-                                    step={50_000}
-                                />
-                            </SidebarGroupContent>
-                        </SidebarGroup>
+                        <FormField
+                            control={form.control}
+                            name="salaryRange"
+                            render={
+                                ({field}) => (
+                                    <SidebarGroup>
+                                        <SidebarGroupLabel>Salary range</SidebarGroupLabel>
+                                        <SidebarGroupContent>
+                                            <FormItem>
+                                                <div className="mb-2 flex justify-between text-xs font-medium">
+                                                    <span>₹{salaryRange[0].toLocaleString()}</span>
+                                                    <span>₹{salaryRange[1].toLocaleString()}</span>
+                                                </div>
+                                                <FormControl>
+                                                    <Slider
+                                                        {...field}
+                                                        value={salaryRange}
+                                                        onValueChange={(value) => setSalaryRange(value as [number, number])}
+                                                        min={0}
+                                                        max={10_000_000}
+                                                        step={50_000}
+                                                    />
+                                                </FormControl>
+                                                <FormMessage/>
+                                            </FormItem>
+                                        </SidebarGroupContent>
+                                    </SidebarGroup>
+                                )
+                            }
+                        />
                         <SidebarGroup>
                             <SidebarGroupLabel>Height range</SidebarGroupLabel>
                             <SidebarGroupContent>
