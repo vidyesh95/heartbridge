@@ -19,7 +19,7 @@ import {useState} from "react";
 import {z} from "zod/v4";
 import {useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
-import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from "@/components/ui/form";
+import {Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage} from "@/components/ui/form";
 import {RadioGroup, RadioGroupItem} from "@/components/ui/radio-group";
 
 const genders = [
@@ -346,12 +346,28 @@ export function AppSidebar() {
                                 ))}
                             </SidebarGroupContent>
                         </SidebarGroup>
-                        <SidebarGroup>
-                            <SidebarGroupLabel>Location</SidebarGroupLabel>
-                            <SidebarGroupContent>
-                                <Input type={"text"} placeholder={"Enter City"}/>
-                            </SidebarGroupContent>
-                        </SidebarGroup>
+                        <FormField
+                            control={form.control}
+                            name="location"
+                            render={
+                                ({field}) => (
+                                    <FormItem>
+                                        <SidebarGroup>
+                                            <SidebarGroupLabel>Location</SidebarGroupLabel>
+                                            <SidebarGroupContent>
+                                                <FormControl>
+                                                    <Input {...field} type={"text"} placeholder={"Enter City"}/>
+                                                </FormControl>
+                                                <FormDescription>
+                                                    Add your city or nearby cities with space in between
+                                                </FormDescription>
+                                                <FormMessage/>
+                                            </SidebarGroupContent>
+                                        </SidebarGroup>
+                                    </FormItem>
+                                )
+                            }
+                        />
                         <SidebarGroup>
                             <SidebarGroupLabel>Education</SidebarGroupLabel>
                             <SidebarGroupContent className="space-y-2">
