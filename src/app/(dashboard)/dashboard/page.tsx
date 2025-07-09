@@ -1,7 +1,7 @@
 import Image from "next/image";
 import {Card, CardContent, CardFooter, CardHeader} from "@/components/ui/card";
 import {Button} from "@/components/ui/button";
-import {Bookmark, Eye, Heart} from "lucide-react";
+import {Bookmark, Heart} from "lucide-react";
 import {SidebarProvider, SidebarTrigger} from "@/components/ui/sidebar";
 import {AppSidebar} from "@/components/dashboard/app-sidebar";
 
@@ -240,7 +240,7 @@ export default function Dashboard() {
                     <div
                         className={"mt-2 w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4"}>
                         {profiles.map((profile) => (
-                            <Card className={"w-full pt-0 overflow-hidden"} key={profile.id}>
+                            <Card className={"w-full pt-0 overflow-hidden cursor-pointer"} key={profile.id}>
                                 <CardHeader className={"px-0"}>
                                     <Image
                                         src={profile.imageUrl}
@@ -263,10 +263,13 @@ export default function Dashboard() {
                                     <p>Education:&nbsp;<span>{profile.education}</span></p>
                                     <p>Profession:&nbsp;<span>{profile.profession}</span></p>
                                 </CardContent>
-                                <CardFooter className={"space-x-4"}>
-                                    <Button variant={"outline"}><Heart/>Like</Button>
-                                    <Button variant={"outline"}><Bookmark/></Button>
-                                    <Button variant={"outline"}><Eye/></Button>
+                                <CardFooter className={"grid grid-cols-2 gap-4"}>
+                                    <Button variant={"outline"} className={"cursor-pointer"}>
+                                        <Heart/>Like
+                                    </Button>
+                                    <Button variant={"outline"} className={"cursor-pointer"}>
+                                        <Bookmark/>Bookmark
+                                    </Button>
                                 </CardFooter>
                             </Card>
                         ))}
