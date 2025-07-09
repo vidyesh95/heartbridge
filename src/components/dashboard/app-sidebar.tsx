@@ -167,8 +167,6 @@ type FormValues = z.infer<typeof formSchema>;
 
 export function AppSidebar() {
     const {setOpen} = useSidebar()
-    const [salaryRange, setSalaryRange] = useState<[number, number]>([600_000, 1_200_000]);
-    const [heightRange, setHeightRange] = useState<[number, number]>([5, 7]);
     const [selectedReligions, setSelectedReligions] = useState<number[]>([]);
     const [selectedEducations, setSelectedEducations] = useState<number[]>([]);
     const form = useForm<FormValues>({
@@ -272,14 +270,14 @@ export function AppSidebar() {
                                         <SidebarGroupContent>
                                             <FormItem>
                                                 <div className="mb-2 flex justify-between text-xs font-medium">
-                                                    <span>₹{salaryRange[0].toLocaleString()}</span>
-                                                    <span>₹{salaryRange[1].toLocaleString()}</span>
+                                                    <span>₹{field.value[0].toLocaleString()}</span>
+                                                    <span>₹{field.value[1].toLocaleString()}</span>
                                                 </div>
                                                 <FormControl>
                                                     <Slider
                                                         {...field}
-                                                        value={salaryRange}
-                                                        onValueChange={(value) => setSalaryRange(value as [number, number])}
+                                                        value={field.value as [number, number]}
+                                                        onValueChange={field.onChange}
                                                         min={0}
                                                         max={10_000_000}
                                                         step={50_000}
@@ -302,14 +300,14 @@ export function AppSidebar() {
                                         <SidebarGroupContent>
                                             <FormItem>
                                                 <div className="mb-2 flex justify-between text-xs font-medium">
-                                                    <span>{heightRange[0]}&apos;</span>
-                                                    <span>{heightRange[1]}&apos;</span>
+                                                    <span>{field.value[0]}&apos;</span>
+                                                    <span>{field.value[1]}&apos;</span>
                                                 </div>
                                                 <FormControl>
                                                     <Slider
                                                         {...field}
-                                                        value={heightRange}
-                                                        onValueChange={(value) => setHeightRange(value as [number, number])}
+                                                        value={field.value as [number, number]}
+                                                        onValueChange={field.onChange}
                                                         min={4}
                                                         max={8}
                                                         step={0.1}
