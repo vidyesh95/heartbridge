@@ -15,7 +15,6 @@ import {Slider} from "@/components/ui/slider";
 import {Input} from "@/components/ui/input";
 import {Button} from "@/components/ui/button";
 import {X} from "lucide-react";
-import {useState} from "react";
 import {z} from "zod/v4";
 import {useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
@@ -167,8 +166,6 @@ type FormValues = z.infer<typeof formSchema>;
 
 export function AppSidebar() {
     const {setOpen} = useSidebar()
-    const [selectedReligions, setSelectedReligions] = useState<number[]>([]);
-    const [selectedEducations, setSelectedEducations] = useState<number[]>([]);
     const form = useForm<FormValues>({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -320,29 +317,49 @@ export function AppSidebar() {
                                 )
                             }
                         />
-                        <SidebarGroup>
-                            <SidebarGroupLabel>Religion</SidebarGroupLabel>
-                            <SidebarGroupContent className="space-y-2">
-                                {religions.map(({id, religion}) => (
-                                    <label
-                                        key={id}
-                                        htmlFor={`religion-${id}`}
-                                        className="flex items-center gap-2 text-sm cursor-pointer select-none"
-                                    >
-                                        <Checkbox
-                                            id={`religion-${id}`}
-                                            checked={selectedReligions.includes(id)}
-                                            onCheckedChange={(checked) =>
-                                                setSelectedReligions(
-                                                    (previous) => checked ? [...previous, id] : previous.filter((religionId) => religionId !== id)
+                        <FormField
+                            control={form.control}
+                            name="selectedReligions"
+                            render={
+                                ({field}) => (
+                                    <SidebarGroup>
+                                        <SidebarGroupLabel>Religion</SidebarGroupLabel>
+                                        <SidebarGroupContent className="space-y-2">
+                                            {religions.map(
+                                                ({id, religion}) => {
+                                                const checked = field.value.includes(id)
+                                                return(
+                                                    <FormItem
+                                                        key={id}
+                                                        className="flex items-center gap-2 text-sm cursor-pointer select-none"
+                                                    >
+                                                        <FormControl>
+                                                            <Checkbox
+                                                                id={`religion-${id}`}
+                                                                checked={checked}
+                                                                onCheckedChange={
+                                                                    (isChecked) => {
+                                                                        const next = new Set<number>(field.value)
+                                                                        if (isChecked) {
+                                                                            next.add(id);
+                                                                        } else {
+                                                                            next.delete(id);
+                                                                        }
+                                                                        field.onChange(Array.from(next))
+                                                                    }
+                                                                }
+                                                            />
+                                                        </FormControl>
+                                                        <FormLabel htmlFor={`religion-${id}`}>{religion}</FormLabel>
+                                                        <FormMessage/>
+                                                    </FormItem>
                                                 )
-                                            }
-                                        />
-                                        <span>{religion}</span>
-                                    </label>
-                                ))}
-                            </SidebarGroupContent>
-                        </SidebarGroup>
+                                            })}
+                                        </SidebarGroupContent>
+                                    </SidebarGroup>
+                                )
+                            }
+                        />
                         <FormField
                             control={form.control}
                             name="location"
@@ -365,29 +382,43 @@ export function AppSidebar() {
                                 )
                             }
                         />
-                        <SidebarGroup>
-                            <SidebarGroupLabel>Education</SidebarGroupLabel>
-                            <SidebarGroupContent className="space-y-2">
-                                {education.map(({id, education}) => (
-                                    <label
-                                        key={id}
-                                        htmlFor={`education-${id}`}
-                                        className="flex items-center gap-2 text-sm cursor-pointer select-none"
-                                    >
-                                        <Checkbox
-                                            id={`education-${id}`}
-                                            checked={selectedEducations.includes(id)}
-                                            onCheckedChange={(checked) =>
-                                                setSelectedEducations((previous) =>
-                                                    checked ? [...previous, id] : previous.filter((educationId) => educationId !== id)
-                                                )
-                                            }
-                                        />
-                                        <span>{education}</span>
-                                    </label>
-                                ))}
-                            </SidebarGroupContent>
-                        </SidebarGroup>
+                        <FormField
+                            control={form.control}
+                            name="selectedEducations"
+                            render={({ field }) => (
+                                <SidebarGroup>
+                                    <SidebarGroupLabel>Education</SidebarGroupLabel>
+                                    <SidebarGroupContent className="space-y-2">
+                                        {education.map(({ id, education: educationLabel }) => {
+                                            const checked = field.value.includes(id);
+                                            return (
+                                                <FormItem
+                                                    key={id}
+                                                    className="flex items-center gap-2 text-sm cursor-pointer select-none"
+                                                >
+                                                    <FormControl>
+                                                        <Checkbox
+                                                            id={`education-${id}`}
+                                                            checked={checked}
+                                                            onCheckedChange={(isChecked) => {
+                                                                const next = new Set<number>(field.value)
+                                                                if (isChecked) {
+                                                                    next.add(id);
+                                                                } else {
+                                                                    next.delete(id);
+                                                                }
+                                                                field.onChange(Array.from(next))
+                                                            }}
+                                                        />
+                                                    </FormControl>
+                                                    <FormLabel htmlFor={`education-${id}`}>{educationLabel}</FormLabel>
+                                                </FormItem>
+                                            );
+                                        })}
+                                    </SidebarGroupContent>
+                                </SidebarGroup>
+                            )}
+                        />
                     </SidebarContent>
                     <SidebarFooter>
                         <Button type={"reset"} variant={"outline"} className={"w-full text-center"}>Reset</Button>
