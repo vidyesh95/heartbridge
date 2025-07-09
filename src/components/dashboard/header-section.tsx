@@ -16,23 +16,27 @@ export default function HeaderSection() {
                 <div className={"flex flex-row items-center gap-2 md:gap-4"}>
                     <div
                         className={"relative w-10 h-10 rounded-full border flex justify-center items-center bg-white/20 dark:bg-black/20 cursor-pointer hover:bg-white/30 text-primary"}>
-                        <Bookmark size={24}/>
-                        {bookmarksCount > 0 && (
-                            <span
-                                className="absolute -top-1 -right-1 flex items-center justify-center min-w-[16px] h-4 px-1 rounded-full bg-blue-500 text-[10px] leading-none text-white">
+                        <Link href={"/dashboard/bookmarked"}>
+                            <Bookmark size={24}/>
+                            {bookmarksCount > 0 && (
+                                <span
+                                    className="absolute -top-1 -right-1 flex items-center justify-center min-w-[16px] h-4 px-1 rounded-full bg-blue-500 text-[10px] leading-none text-white">
                                 {bookmarksCount}
                             </span>
-                        )}
+                            )}
+                        </Link>
                     </div>
                     <div
                         className={"relative w-10 h-10 rounded-full border flex justify-center items-center bg-white/20 dark:bg-black/20 cursor-pointer hover:bg-white/30 text-primary"}>
-                        <Heart size={24}/>
-                        {likesCount > 0 && (
-                            <span
-                                className="absolute -top-1 -right-1 flex items-center justify-center min-w-[16px] h-4 px-1 rounded-full bg-red-500 text-[10px] leading-none text-white">
+                        <Link href={"/dashboard/liked"}>
+                            <Heart size={24}/>
+                            {likesCount > 0 && (
+                                <span
+                                    className="absolute -top-1 -right-1 flex items-center justify-center min-w-[16px] h-4 px-1 rounded-full bg-red-500 text-[10px] leading-none text-white">
                                 {likesCount}
                             </span>
-                        )}
+                            )}
+                        </Link>
                     </div>
                     <Avatar className={"w-10 h-10"}>
                         <AvatarImage src="https://github.com/shadcn.png"/>
