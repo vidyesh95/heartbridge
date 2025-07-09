@@ -265,10 +265,10 @@ export default function Dashboard() {
                                 </CardContent>
                                 <CardFooter className={"grid grid-cols-2 gap-4"}>
                                     <Button variant={"outline"} className={"cursor-pointer"}>
-                                        <Heart/>Like
+                                        <Bookmark/>Bookmark
                                     </Button>
                                     <Button variant={"outline"} className={"cursor-pointer"}>
-                                        <Bookmark/>Bookmark
+                                        <Heart/>Like
                                     </Button>
                                 </CardFooter>
                             </Card>

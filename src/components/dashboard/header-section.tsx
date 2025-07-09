@@ -16,21 +16,21 @@ export default function HeaderSection() {
                 <div className={"flex flex-row items-center gap-2 md:gap-4"}>
                     <div
                         className={"relative w-10 h-10 rounded-full border flex justify-center items-center bg-white/20 dark:bg-black/20 cursor-pointer hover:bg-white/30 text-primary"}>
-                        <Heart size={24}/>
-                        {likesCount > 0 && (
-                            <span
-                                className="absolute -top-1 -right-1 flex items-center justify-center min-w-[16px] h-4 px-1 rounded-full bg-red-500 text-[10px] leading-none text-white">
-                                {likesCount}
-                            </span>
-                        )}
-                    </div>
-                    <div
-                        className={"relative w-10 h-10 rounded-full border flex justify-center items-center bg-white/20 dark:bg-black/20 cursor-pointer hover:bg-white/30 text-primary"}>
                         <Bookmark size={24}/>
                         {bookmarksCount > 0 && (
                             <span
                                 className="absolute -top-1 -right-1 flex items-center justify-center min-w-[16px] h-4 px-1 rounded-full bg-blue-500 text-[10px] leading-none text-white">
                                 {bookmarksCount}
+                            </span>
+                        )}
+                    </div>
+                    <div
+                        className={"relative w-10 h-10 rounded-full border flex justify-center items-center bg-white/20 dark:bg-black/20 cursor-pointer hover:bg-white/30 text-primary"}>
+                        <Heart size={24}/>
+                        {likesCount > 0 && (
+                            <span
+                                className="absolute -top-1 -right-1 flex items-center justify-center min-w-[16px] h-4 px-1 rounded-full bg-red-500 text-[10px] leading-none text-white">
+                                {likesCount}
                             </span>
                         )}
                     </div>
