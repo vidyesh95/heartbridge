@@ -6,7 +6,9 @@ import {
     SidebarFooter,
     SidebarGroup,
     SidebarGroupContent,
-    SidebarGroupLabel, SidebarHeader, useSidebar
+    SidebarGroupLabel,
+    SidebarHeader,
+    useSidebar
 } from "@/components/ui/sidebar"
 import {Checkbox} from "@/components/ui/checkbox";
 import {Slider} from "@/components/ui/slider";
@@ -17,7 +19,23 @@ import {useState} from "react";
 import {z} from "zod/v4";
 import {useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
-import {Form} from "@/components/ui/form";
+import {Form, FormControl, FormField, FormItem, FormLabel} from "@/components/ui/form";
+import {RadioGroup, RadioGroupItem} from "@/components/ui/radio-group";
+
+const genders = [
+    {
+        id: 1,
+        gender: "All"
+    },
+    {
+        id: 2,
+        gender: "Male"
+    },
+    {
+        id: 3,
+        gender: "Female"
+    }
+]
 
 const religions = [
     {
@@ -118,6 +136,7 @@ const education = [
 ]
 
 const formSchema = z.object({
+    gender: z.number(),
     ageRange: z
         .tuple([
             z.number().min(18, {error: "Minimum age is 18"}),
@@ -156,6 +175,7 @@ export function AppSidebar() {
     const form = useForm<FormValues>({
         resolver: zodResolver(formSchema),
         defaultValues: {
+            gender: 1,
             ageRange: [23, 30],
             salaryRange: [600_000, 1_200_000],
             heightRange: [5, 7],
@@ -183,6 +203,32 @@ export function AppSidebar() {
                         </Button>
                     </SidebarHeader>
                     <SidebarContent>
+                        <FormField
+                            control={form.control}
+                            name="gender"
+                            render={({field}) => (
+                                <SidebarGroup>
+                                    <SidebarGroupLabel>Gender</SidebarGroupLabel>
+                                    <SidebarGroupContent>
+                                        <RadioGroup
+                                            className="space-y-2"
+                                            value={field.value.toString()}
+                                            onValueChange={(val) => field.onChange(Number(val))}
+                                        >
+                                            {genders.map(({id, gender}) => (
+                                                <FormItem key={id} className="flex items-center gap-2">
+                                                    <FormControl>
+                                                        <RadioGroupItem {...field} value={id.toString()}
+                                                                        id={`gender-${id}`}/>
+                                                    </FormControl>
+                                                    <FormLabel htmlFor={`gender-${id}`}>{gender}</FormLabel>
+                                                </FormItem>
+                                            ))}
+                                        </RadioGroup>
+                                    </SidebarGroupContent>
+                                </SidebarGroup>
+                            )}
+                        />
                         <SidebarGroup>
                             <SidebarGroupLabel>Age range</SidebarGroupLabel>
                             <SidebarGroupContent>
