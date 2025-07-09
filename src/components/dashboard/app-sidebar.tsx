@@ -167,7 +167,6 @@ type FormValues = z.infer<typeof formSchema>;
 
 export function AppSidebar() {
     const {setOpen} = useSidebar()
-    const [ageRange, setAgeRange] = useState<[number, number]>([23, 30])
     const [salaryRange, setSalaryRange] = useState<[number, number]>([600_000, 1_200_000]);
     const [heightRange, setHeightRange] = useState<[number, number]>([5, 7]);
     const [selectedReligions, setSelectedReligions] = useState<number[]>([]);
@@ -243,14 +242,14 @@ export function AppSidebar() {
                                         <SidebarGroupContent>
                                             <FormItem>
                                                 <div className="mb-2 flex justify-between text-xs font-medium">
-                                                    <span>{ageRange[0]}</span>
-                                                    <span>{ageRange[1]}</span>
+                                                    <span>{field.value[0]}</span>
+                                                    <span>{field.value[1]}</span>
                                                 </div>
                                                 <FormControl>
                                                     <Slider
                                                         {...field}
-                                                        value={ageRange}
-                                                        onValueChange={(value) => setAgeRange(value as [number, number])}
+                                                        value={field.value as [number, number]}
+                                                        onValueChange={field.onChange}
                                                         min={18}
                                                         max={118}
                                                         step={1}
