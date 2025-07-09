@@ -25,10 +25,10 @@ export default function ResetEmailConfirmation() {
 
                     <h2 className="text-2xl font-bold text-center">Check Your Email</h2>
                     <div className="flex flex-col gap-0">
-                        <h4 className="text-center">We&#39;ve sent a password reset link to</h4>
+                        <h4 className="text-center">We have sent a password reset link to</h4>
                         <span className="text-center font-bold">admin@gmail.com</span>
                     </div>
-                    <p className="text text-center text-sm mb-8">Didn&#39;t receive the email? Check your spam folder or
+                    <p className="text text-center text-sm mb-8">Didn&apos;t receive the email? Check your spam folder or
                         <Link href="/reset-password" className="w-auto text-primary font-bold"> try again</Link>
                     </p>
                     <Button variant="outline" className="w-full" asChild>
