@@ -158,8 +158,8 @@ const formSchema = z.object({
             error: "Min height cannot exceed max height",
         }),
     location: z.string().optional(),
-    selectedReligions: z.array(z.number()),
-    selectedEducations: z.array(z.number()),
+    selectedReligions: z.array(z.number()).min(1, {error: "Select at least one religion"}),
+    selectedEducations: z.array(z.number()).min(1, {error: "Select at least one education"})
 })
 
 type FormValues = z.infer<typeof formSchema>;
@@ -173,8 +173,8 @@ export function AppSidebar() {
             ageRange: [23, 30],
             salaryRange: [600_000, 1_200_000],
             heightRange: [5, 7],
-            selectedReligions: [],
-            selectedEducations: []
+            selectedReligions: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14],
+            selectedEducations: [1, 2, 3, 4, 5, 6, 7, 8, 9]
         },
     })
 
@@ -213,7 +213,6 @@ export function AppSidebar() {
                                                 <FormItem key={id} className="flex items-center gap-2">
                                                     <FormControl>
                                                         <RadioGroupItem
-                                                            {...field}
                                                             value={id.toString()}
                                                             id={`gender-${id}`}
                                                         />
@@ -242,7 +241,6 @@ export function AppSidebar() {
                                                 </div>
                                                 <FormControl>
                                                     <Slider
-                                                        {...field}
                                                         value={field.value as [number, number]}
                                                         onValueChange={field.onChange}
                                                         min={18}
@@ -272,7 +270,6 @@ export function AppSidebar() {
                                                 </div>
                                                 <FormControl>
                                                     <Slider
-                                                        {...field}
                                                         value={field.value as [number, number]}
                                                         onValueChange={field.onChange}
                                                         min={0}
@@ -302,7 +299,6 @@ export function AppSidebar() {
                                                 </div>
                                                 <FormControl>
                                                     <Slider
-                                                        {...field}
                                                         value={field.value as [number, number]}
                                                         onValueChange={field.onChange}
                                                         min={4}
