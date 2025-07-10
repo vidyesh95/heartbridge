@@ -6,6 +6,7 @@ import {Button} from "@/components/ui/button";
 import {Bookmark, Heart} from "lucide-react";
 import {SidebarProvider, SidebarTrigger} from "@/components/ui/sidebar";
 import {AppSidebar} from "@/components/dashboard/app-sidebar";
+import Link from "next/link";
 
 const profiles = [
     {
@@ -266,11 +267,15 @@ export default function Profiles() {
                                     <p>Profession:&nbsp;<span>{profile.profession}</span></p>
                                 </CardContent>
                                 <CardFooter className={"grid grid-cols-2 gap-4"}>
-                                    <Button variant={"outline"} className={"cursor-pointer"}>
-                                        <Bookmark/>Bookmark
+                                    <Button variant={"outline"} className={"cursor-pointer"} asChild>
+                                        <Link href={"/sign-in"}>
+                                            <Bookmark/>Bookmark
+                                        </Link>
                                     </Button>
-                                    <Button variant={"outline"} className={"cursor-pointer"}>
-                                        <Heart/>Like
+                                    <Button variant={"outline"} className={"cursor-pointer"} asChild>
+                                        <Link href={"/sign-in"}>
+                                            <Heart/>Like
+                                        </Link>
                                     </Button>
                                 </CardFooter>
                             </Card>
