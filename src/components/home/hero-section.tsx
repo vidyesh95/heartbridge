@@ -18,10 +18,10 @@ export default function HeroSection() {
             </hgroup>
             <div className={"w-full md:w-auto flex flex-col md:flex-row gap-4"}>
                 <Button variant={"outline"} asChild>
-                    <Link href={"/dashboard"}>Browse Profiles 🔍</Link>
+                    <Link href={"/profiles"}>Browse Profiles 🔍</Link>
                 </Button>
                 <Button asChild>
-                    <Link href={"/dashboard"}>Start Your Journey 💘</Link>
+                    <Link href={"/profiles"}>Start Your Journey 💘</Link>
                 </Button>
             </div>
         </section>

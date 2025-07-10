@@ -226,7 +226,7 @@ const profiles = [
     }
 ]
 
-export default function Dashboard() {
+export default function Profiles() {
     return (
         <section>
             <hgroup className={"flex flex-col items-center justify-center space-y-4 text-center pt-18"}>

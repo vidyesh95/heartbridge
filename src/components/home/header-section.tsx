@@ -8,7 +8,7 @@ export default function HeaderSection() {
             <nav className={"w-full max-w-5xl px-4 md:px-0 flex flex-row items-center justify-between gap-4 md:gap-8"}>
                 <Link href={"/"} className={"font-semibold text-2xl"}>♡ HeartBridge</Link>
                 <Button asChild>
-                    <Link href={"/dashboard"}>Get Started</Link>
+                    <Link href={"/profiles"}>Get Started</Link>
                 </Button>
             </nav>
         </header>

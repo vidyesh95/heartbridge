@@ -20,7 +20,7 @@ export default function HeaderSection() {
                         className={"relative w-10 h-10 rounded-full cursor-pointer text-primary"}
                         asChild
                     >
-                        <Link href={"/dashboard/bookmarked"}>
+                        <Link href={"/profiles/bookmarked"}>
                             <Bookmark size={24}/>
                             {bookmarksCount > 0 && (
                                 <span
@@ -36,7 +36,7 @@ export default function HeaderSection() {
                         className={"relative w-10 h-10 rounded-full text-primary cursor-pointer"}
                         asChild
                     >
-                        <Link href={"/dashboard/liked"}>
+                        <Link href={"/profiles/liked"}>
                             <Heart size={24}/>
                             {likesCount > 0 && (
                                 <span
