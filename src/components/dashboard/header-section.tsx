@@ -47,10 +47,13 @@ export default function HeaderSection() {
                             )}
                         </Link>
                     </Button>
-                    <Avatar className={"w-10 h-10"}>
-                        <AvatarImage src="https://github.com/shadcn.png"/>
-                        <AvatarFallback>CN</AvatarFallback>
-                    </Avatar>
+                    <Button className={"h-10 rounded-full cursor-pointer"} asChild>
+                        <Link href={"/sign-in"}>Sign in</Link>
+                    </Button>
+                    {/*<Avatar className={"w-10 h-10"}>*/}
+                    {/*    <AvatarImage src="https://github.com/shadcn.png"/>*/}
+                    {/*    <AvatarFallback>CN</AvatarFallback>*/}
+                    {/*</Avatar>*/}
                 </div>
             </nav>
         </header>
