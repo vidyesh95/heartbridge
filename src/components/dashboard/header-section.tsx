@@ -1,35 +1,40 @@
 "use client";
 
-import React, { useState } from "react";
+import { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { Bookmark, Heart, LogOut, Shield } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Bookmark, Heart } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useQuery } from "@tanstack/react-query";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { authClient } from "@/lib/auth-client";
+import { isAdminRole } from "@/lib/auth-utils";
 
 export default function HeaderSection() {
+  const router = useRouter();
   const [likesCount] = useState(0);
   const [bookmarksCount] = useState(0);
+  const { data: session, isPending } = authClient.useSession();
+  const user = session?.user;
+  const showAdmin = isAdminRole(user?.role);
 
-  /**
-   * In production (Vercel) you’ll set
-   * NEXT_PUBLIC_API_URL=https://api.heartbridge.com
-   * In dev (when the env var is missing) it falls back to
-   * http://localhost:8000, which should be where you run uvicorn
-   */
-  // Call FastAPI directly (CORS) — base URL comes from env
-  const { data: user } = useQuery({
-    queryKey: ["current-user"],
-    queryFn: async () => {
-      const apiBase = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000";
-      const res = await fetch(`${apiBase}/auth/me`, {
-        credentials: "include", // send session cookie
-      });
-      if (!res.ok) return null; // 401/403 = unauthenticated
-      return res.json();
-    },
-    staleTime: 60_000, // 1 min
-  });
+  async function handleSignOut() {
+    await authClient.signOut({
+      fetchOptions: {
+        onSuccess: () => {
+          router.push("/sign-in");
+          router.refresh();
+        },
+      },
+    });
+  }
 
   return (
     <header
@@ -70,11 +75,38 @@ export default function HeaderSection() {
               )}
             </Link>
           </Button>
-          {user ? (
-            <Avatar className={"h-10 w-10"}>
-              <AvatarImage src={user.image ?? "https://github.com/shadcn.png"} />
-              <AvatarFallback>{(user.name ?? "U").slice(0, 2).toUpperCase()}</AvatarFallback>
-            </Avatar>
+          {isPending ? (
+            <div className="h-10 w-10 animate-pulse rounded-full bg-muted" />
+          ) : user ? (
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" className="h-10 w-10 rounded-full p-0">
+                  <Avatar className={"h-10 w-10"}>
+                    <AvatarImage src={user.image ?? undefined} alt={user.name} />
+                    <AvatarFallback>{(user.name ?? "U").slice(0, 2).toUpperCase()}</AvatarFallback>
+                  </Avatar>
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-56">
+                <DropdownMenuLabel className="font-normal">
+                  <p className="truncate text-sm font-medium">{user.name}</p>
+                  <p className="truncate text-xs text-muted-foreground">{user.email}</p>
+                </DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                {showAdmin ? (
+                  <DropdownMenuItem asChild>
+                    <Link href="/admin">
+                      <Shield />
+                      Admin
+                    </Link>
+                  </DropdownMenuItem>
+                ) : null}
+                <DropdownMenuItem onSelect={handleSignOut}>
+                  <LogOut />
+                  Sign out
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           ) : (
             <Button className={"h-10 cursor-pointer rounded-full"} asChild>
               <Link href={"/sign-in"}>Sign in</Link>

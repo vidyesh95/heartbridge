@@ -9,10 +9,12 @@
     "lint": "oxlint",
     "lint:fix": "oxlint --fix",
     "fmt": "oxfmt",
-    "fmt:check": "oxfmt --check"
+    "fmt:check": "oxfmt --check",
+    "auth:migrate": "pnpm dlx auth@latest migrate --config src/lib/auth.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.1",
+    "@libsql/kysely-libsql": "^0.4.1",
     "@radix-ui/react-accordion": "^1.2.12",
     "@radix-ui/react-alert-dialog": "^1.1.15",
     "@radix-ui/react-aspect-ratio": "^1.1.7",
