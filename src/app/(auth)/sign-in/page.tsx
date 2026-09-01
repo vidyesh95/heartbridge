@@ -20,10 +20,7 @@ export default async function SignIn({
   return (
     <GoogleAuthCard
       title="Sign in"
-      description="Continue with your Google account"
-      switchLabel="Don't have an account?"
-      switchHref="/sign-up"
-      switchText="Sign up"
+      description="Continue with your Google account to sign in or create an account"
       callbackURL={nextPath}
       oauthError={oauthErrorMessage(error)}
     />

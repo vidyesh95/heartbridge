@@ -39,22 +39,14 @@ function GoogleIcon() {
 type GoogleAuthCardProps = {
   title: string;
   description: string;
-  switchLabel: string;
-  switchHref: "/sign-in" | "/sign-up";
-  switchText: string;
   callbackURL?: string;
-  errorCallbackURL?: "/sign-in" | "/sign-up";
   oauthError?: string | null;
 };
 
 export function GoogleAuthCard({
   title,
   description,
-  switchLabel,
-  switchHref,
-  switchText,
   callbackURL = "/profiles",
-  errorCallbackURL = "/sign-in",
   oauthError = null,
 }: GoogleAuthCardProps) {
   const [isPending, setIsPending] = useState(false);
@@ -66,7 +58,7 @@ export function GoogleAuthCard({
     const { error: signInError } = await authClient.signIn.social({
       provider: "google",
       callbackURL,
-      errorCallbackURL,
+      errorCallbackURL: "/sign-in",
     });
     if (signInError) {
       setError(signInError.message ?? "Could not start Google sign-in.");
@@ -99,12 +91,6 @@ export function GoogleAuthCard({
             <GoogleIcon />
             {isPending ? "Redirecting to Google..." : "Continue with Google"}
           </Button>
-          <span className="flex justify-center gap-1">
-            {switchLabel}
-            <Link href={switchHref} className="font-semibold text-primary">
-              {switchText}
-            </Link>
-          </span>
         </CardContent>
         <CardFooter className="text-xs">
           By continuing you accept&nbsp;

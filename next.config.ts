@@ -6,6 +6,15 @@ const nextConfig: NextConfig = {
     turbopackRustReactCompiler: true,
     useTypeScriptCli: true,
   },
+  async redirects() {
+    return [
+      {
+        source: "/sign-up",
+        destination: "/sign-in",
+        permanent: true,
+      },
+    ];
+  },
 };
 
 export default nextConfig;
