@@ -5,13 +5,13 @@ import SuccessStoriesSection from "@/components/home/success-stories-section";
 import FrequentlyAskedQuestionsSection from "@/components/home/frequently-asked-questions-section";
 
 export default function Home() {
-    return (
-        <main>
-            <HeroSection/>
-            <StatisticsSection/>
-            <HowItWorksSection/>
-            <SuccessStoriesSection/>
-            <FrequentlyAskedQuestionsSection/>
-        </main>
-    )
+  return (
+    <main>
+      <HeroSection />
+      <StatisticsSection />
+      <HowItWorksSection />
+      <SuccessStoriesSection />
+      <FrequentlyAskedQuestionsSection />
+    </main>
+  );
 }
