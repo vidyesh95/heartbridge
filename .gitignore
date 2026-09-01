@@ -43,3 +43,6 @@ next-env.d.ts
 
 # Jetbrains IDEs
 .idea
+
+# local agent skills
+**/skills/

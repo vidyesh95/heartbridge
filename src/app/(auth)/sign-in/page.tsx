@@ -10,7 +10,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Lock, Mail, Phone } from "lucide-react";
+import { Lock, Mail } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
 
 export default function SignIn() {
@@ -32,16 +32,12 @@ export default function SignIn() {
             <div className="flex flex-col gap-1">
               <Label htmlFor="email">
                 <Mail className="h-4 w-4" />
-                Email or
-                <Phone className="h-4 w-4" />
-                Phone number
+                Email
               </Label>
               <Input
-                type="text"
+                type="email"
                 id="email"
-                placeholder="Enter your email or phone number"
-                pattern="^([^\s@]+@[^\s@]+\.[^\s@]+|\+?\d{10,15})$"
-                title="Please enter a valid email or phone number"
+                placeholder="Enter your email"
                 required
               />
             </div>
