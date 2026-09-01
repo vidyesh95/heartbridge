@@ -43,6 +43,8 @@ type GoogleAuthCardProps = {
   switchHref: "/sign-in" | "/sign-up";
   switchText: string;
   callbackURL?: string;
+  errorCallbackURL?: "/sign-in" | "/sign-up";
+  oauthError?: string | null;
 };
 
 export function GoogleAuthCard({
@@ -52,9 +54,11 @@ export function GoogleAuthCard({
   switchHref,
   switchText,
   callbackURL = "/profiles",
+  errorCallbackURL = "/sign-in",
+  oauthError = null,
 }: GoogleAuthCardProps) {
   const [isPending, setIsPending] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(oauthError);
 
   async function handleGoogleSignIn() {
     setError(null);
@@ -62,7 +66,7 @@ export function GoogleAuthCard({
     const { error: signInError } = await authClient.signIn.social({
       provider: "google",
       callbackURL,
-      errorCallbackURL: "/sign-in",
+      errorCallbackURL,
     });
     if (signInError) {
       setError(signInError.message ?? "Could not start Google sign-in.");

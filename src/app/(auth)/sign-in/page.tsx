@@ -1,18 +1,19 @@
 import { redirect } from "next/navigation";
 import { GoogleAuthCard } from "@/components/auth/google-auth-card";
+import { oauthErrorMessage } from "@/lib/auth-utils";
 import { getServerSession } from "@/lib/session";
 
 export default async function SignIn({
   searchParams,
 }: {
-  searchParams: Promise<{ callbackURL?: string }>;
+  searchParams: Promise<{ callbackURL?: string; error?: string }>;
 }) {
   const session = await getServerSession();
   if (session) {
     redirect("/profiles");
   }
 
-  const { callbackURL } = await searchParams;
+  const { callbackURL, error } = await searchParams;
   const nextPath =
     callbackURL?.startsWith("/") && !callbackURL.startsWith("//") ? callbackURL : "/profiles";
 
@@ -24,6 +25,7 @@ export default async function SignIn({
       switchHref="/sign-up"
       switchText="Sign up"
       callbackURL={nextPath}
+      oauthError={oauthErrorMessage(error)}
     />
   );
 }

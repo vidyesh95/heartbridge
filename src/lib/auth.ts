@@ -5,6 +5,14 @@ import { LibsqlDialect } from "@libsql/kysely-libsql";
 
 const adminEmail = process.env.ADMIN_EMAIL?.trim().toLowerCase();
 
+function requireEnv(name: string) {
+  const value = process.env[name];
+  if (!value) {
+    throw new Error(`${name} is not set. Add it to .env.`);
+  }
+  return value;
+}
+
 function createTursoDialect() {
   const url = process.env.TURSO_DATABASE_URL;
   if (!url) {
@@ -18,17 +26,33 @@ function createTursoDialect() {
   });
 }
 
+requireEnv("BETTER_AUTH_SECRET");
+const googleClientId = requireEnv("GOOGLE_CLIENT_ID");
+const googleClientSecret = requireEnv("GOOGLE_CLIENT_SECRET");
+
 export const auth = betterAuth({
   appName: "HeartBridge",
   database: {
     dialect: createTursoDialect(),
     type: "sqlite",
   },
+  trustedOrigins: [
+    "http://localhost:3000",
+    "https://heartbridge.in",
+    "https://www.heartbridge.in",
+  ],
   socialProviders: {
     google: {
-      clientId: process.env.GOOGLE_CLIENT_ID as string,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
+      clientId: googleClientId,
+      clientSecret: googleClientSecret,
       prompt: "select_account",
+    },
+  },
+  account: {
+    encryptOAuthTokens: true,
+    accountLinking: {
+      enabled: true,
+      trustedProviders: ["google"],
     },
   },
   session: {
@@ -39,6 +63,12 @@ export const auth = betterAuth({
   },
   rateLimit: {
     storage: "database",
+  },
+  advanced: {
+    useSecureCookies: process.env.NODE_ENV === "production",
+    ipAddress: {
+      ipAddressHeaders: ["x-forwarded-for"],
+    },
   },
   databaseHooks: {
     user: {
