@@ -22,7 +22,12 @@ import { Slider } from "@/components/ui/slider";
 import { Label } from "@/components/ui/label";
 import { allCountryCatalogs, religionsAcrossAllCountries } from "@/domain/countries/catalog-for-country";
 import { educationBandOptions, maritalStatusOptions } from "@/domain/countries/shared-profile-options";
-import { browseFiltersToSearchParams } from "@/domain/profile/parse-browse-search-params";
+import {
+  BROWSE_AGE_RANGE,
+  BROWSE_HEIGHT_RANGE_CM,
+  browseFiltersToSearchParams,
+} from "@/domain/profile/parse-browse-search-params";
+import { BROWSE_FILTERS_SIDEBAR_ID } from "@/components/profile/browse-filters-button";
 import { centimetersFromFeetAndInches, formatHeightFromCentimeters } from "@/domain/display/format-height";
 import { formatIncomeAmount } from "@/domain/display/format-income";
 import type { CountryCatalog, SupportedCountryCode } from "@/domain/countries/supported-countries";
@@ -48,21 +53,19 @@ export function AppSidebar({
   initialFilters: ProfileSearchFilters;
 }) {
   const router = useRouter();
-  const { setOpen } = useSidebar();
+  const { setOpen, setOpenMobile } = useSidebar();
   const religions = useMemo(() => religionsAcrossAllCountries(), []);
-
-  const defaultHeight: [number, number] = [
-    initialFilters.heightMinCm ?? 140,
-    initialFilters.heightMaxCm ?? 200,
-  ];
 
   const form = useForm<FilterFormValues>({
     defaultValues: {
       country: initialFilters.country ?? "all",
       gender: initialFilters.gender ?? "all",
-      ageRange: [initialFilters.ageMin ?? 21, initialFilters.ageMax ?? 40],
+      ageRange: [initialFilters.ageMin ?? BROWSE_AGE_RANGE.min, initialFilters.ageMax ?? BROWSE_AGE_RANGE.max],
       incomeRange: [initialFilters.incomeMin ?? 0, initialFilters.incomeMax ?? viewerCatalog.incomeSliderMax],
-      heightRange: defaultHeight,
+      heightRange: [
+        initialFilters.heightMinCm ?? BROWSE_HEIGHT_RANGE_CM.min,
+        initialFilters.heightMaxCm ?? BROWSE_HEIGHT_RANGE_CM.max,
+      ],
       city: initialFilters.city ?? "",
       religions: initialFilters.religions ?? [],
       educationBands: initialFilters.educationBands ?? [],
@@ -70,23 +73,37 @@ export function AppSidebar({
     },
   });
 
+  function closeFilters() {
+    setOpen(false);
+    setOpenMobile(false);
+  }
+
   function applyFilters(values: FilterFormValues) {
+    const ageAtFullRange =
+      values.ageRange[0] === BROWSE_AGE_RANGE.min && values.ageRange[1] === BROWSE_AGE_RANGE.max;
+    const heightAtFullRange =
+      values.heightRange[0] === BROWSE_HEIGHT_RANGE_CM.min &&
+      values.heightRange[1] === BROWSE_HEIGHT_RANGE_CM.max;
+    const incomeAtFullRange =
+      values.incomeRange[0] === 0 && values.incomeRange[1] === viewerCatalog.incomeSliderMax;
+    const omitIncome = incomeAtFullRange || values.country === "all";
     const params = browseFiltersToSearchParams({
       country: values.country as SupportedCountryCode | "all",
       gender: values.gender,
-      ageMin: values.ageRange[0],
-      ageMax: values.ageRange[1],
-      incomeMin: values.incomeRange[0],
-      incomeMax: values.incomeRange[1],
-      heightMinCm: values.heightRange[0],
-      heightMaxCm: values.heightRange[1],
+      ageMin: ageAtFullRange ? undefined : values.ageRange[0],
+      ageMax: ageAtFullRange ? undefined : values.ageRange[1],
+      incomeMin: omitIncome ? undefined : values.incomeRange[0],
+      incomeMax: omitIncome ? undefined : values.incomeRange[1],
+      heightMinCm: heightAtFullRange ? undefined : values.heightRange[0],
+      heightMaxCm: heightAtFullRange ? undefined : values.heightRange[1],
       city: values.city,
       religions: values.religions,
       educationBands: values.educationBands,
       maritalStatuses: values.maritalStatuses,
     });
-    router.push(`/profiles?${params.toString()}`);
-    setOpen(false);
+    const query = params.toString();
+    router.push(query ? `/profiles?${query}` : "/profiles");
+    closeFilters();
   }
 
   const incomeRange = form.watch("incomeRange");
@@ -94,11 +111,11 @@ export function AppSidebar({
   const ageRange = form.watch("ageRange");
 
   return (
-    <form onSubmit={form.handleSubmit(applyFilters)}>
-      <Sidebar>
+    <Sidebar id={BROWSE_FILTERS_SIDEBAR_ID}>
+      <form className="flex h-full min-h-0 flex-col" onSubmit={form.handleSubmit(applyFilters)}>
         <SidebarHeader className="flex flex-row items-center justify-between gap-4 px-4 py-4 md:pt-16">
           <h4 className="text-2xl font-semibold text-primary">Filters</h4>
-          <Button variant="destructive" type="button" className="w-auto cursor-pointer" onClick={() => setOpen(false)}>
+          <Button variant="destructive" type="button" className="w-auto cursor-pointer" onClick={closeFilters}>
             <X />
           </Button>
         </SidebarHeader>
@@ -142,8 +159,8 @@ export function AppSidebar({
                 <span>{ageRange[1]}</span>
               </div>
               <Slider
-                min={18}
-                max={70}
+                min={BROWSE_AGE_RANGE.min}
+                max={BROWSE_AGE_RANGE.max}
                 step={1}
                 value={ageRange}
                 onValueChange={(value) => form.setValue("ageRange", value as [number, number])}
@@ -176,8 +193,8 @@ export function AppSidebar({
                 <span>{formatHeightFromCentimeters(heightRange[1], viewerCatalog.heightDisplayUnit)}</span>
               </div>
               <Slider
-                min={140}
-                max={210}
+                min={BROWSE_HEIGHT_RANGE_CM.min}
+                max={BROWSE_HEIGHT_RANGE_CM.max}
                 step={viewerCatalog.heightDisplayUnit === "centimeters" ? 1 : centimetersFromFeetAndInches(0, 1)}
                 value={heightRange}
                 onValueChange={(value) => form.setValue("heightRange", value as [number, number])}
@@ -212,13 +229,20 @@ export function AppSidebar({
           />
         </SidebarContent>
         <SidebarFooter>
-          <Button type="button" variant="outline" onClick={() => router.push("/profiles")}>
+          <Button
+            type="button"
+            variant="outline"
+            onClick={() => {
+              router.push("/profiles");
+              closeFilters();
+            }}
+          >
             Reset
           </Button>
           <Button type="submit">Apply filters</Button>
         </SidebarFooter>
-      </Sidebar>
-    </form>
+      </form>
+    </Sidebar>
   );
 }
 

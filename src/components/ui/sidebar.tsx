@@ -149,6 +149,7 @@ function Sidebar({
   collapsible = "offcanvas",
   className,
   children,
+  id,
   ...props
 }: React.ComponentProps<"div"> & {
   side?: "left" | "right";
@@ -161,6 +162,7 @@ function Sidebar({
     return (
       <div
         data-slot="sidebar"
+        id={id}
         className={cn(
           "flex h-full w-(--sidebar-width) flex-col bg-sidebar text-sidebar-foreground",
           className,
@@ -176,6 +178,7 @@ function Sidebar({
     return (
       <Sheet open={openMobile} onOpenChange={setOpenMobile} {...props}>
         <SheetContent
+          id={id}
           data-sidebar="sidebar"
           data-slot="sidebar"
           data-mobile="true"
@@ -220,6 +223,7 @@ function Sidebar({
       />
       <div
         data-slot="sidebar-container"
+        id={id}
         className={cn(
           "fixed inset-y-0 z-10 hidden h-svh w-(--sidebar-width) transition-[left,right,width] duration-200 ease-linear md:flex",
           side === "left"

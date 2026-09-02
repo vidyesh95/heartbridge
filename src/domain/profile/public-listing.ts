@@ -1,7 +1,18 @@
+import { religionsAcrossAllCountries } from "@/domain/countries/catalog-for-country";
+import { educationBandOptions, maritalStatusOptions } from "@/domain/countries/shared-profile-options";
 import { computeAgeFromDateOfBirth } from "@/domain/display/compute-age-from-date-of-birth";
 import type { MatrimonialProfile, PartnerPreference } from "@/db/types";
 
 export const PUBLIC_LISTING_LIMIT = 50;
+
+export const PUBLIC_AVAILABLE_FILTERS = {
+  country: ["IN", "CN", "US", "DE", "all"],
+  gender: ["male", "female", "all"],
+  educationBands: educationBandOptions.map((option) => option.value),
+  maritalStatuses: maritalStatusOptions.map((option) => option.value),
+  religions: religionsAcrossAllCountries().map((option) => option.value),
+  ranges: ["ageMin", "ageMax", "city", "incomeMin", "incomeMax", "heightMinCm", "heightMaxCm"],
+};
 
 export type PublicProfileListing = {
   id: string;

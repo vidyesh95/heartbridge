@@ -144,7 +144,7 @@ function appendInList(
   if (!values || values.length === 0) {
     return;
   }
-  const placeholders = values.map(() => "?").join(", ");
-  clauses.push(`${column} IN (${placeholders})`);
+  const placeholders = values.map(() => "LOWER(?)").join(", ");
+  clauses.push(`LOWER(${column}) IN (${placeholders})`);
   args.push(...values);
 }

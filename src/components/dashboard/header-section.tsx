@@ -1,8 +1,12 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { Bookmark, Heart, Inbox, LogOut, Settings, Shield, UserRound } from "lucide-react";
+import {
+  BrowseFiltersButton,
+  dispatchToggleBrowseFilters,
+} from "@/components/profile/browse-filters-button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
@@ -28,6 +32,7 @@ export default function HeaderSection({
   hasMatrimonialProfile?: boolean;
 }) {
   const router = useRouter();
+  const pathname = usePathname();
   const { data: session, isPending } = authClient.useSession();
   const user = session?.user;
   const showAdmin = isAdminRole(user?.role);
@@ -46,9 +51,14 @@ export default function HeaderSection({
   return (
     <header className="fixed top-0 left-0 z-50 flex h-14 w-full flex-col items-center justify-center border border-white/20 bg-white/20 backdrop-blur-xl dark:border-white/20 dark:bg-black/20">
       <nav className="flex w-full flex-row items-center justify-between gap-4 px-4">
-        <Link href="/profiles" className="text-2xl font-semibold">
-          ♡ HeartBridge
-        </Link>
+        <div className="flex items-center gap-3">
+          <Link href="/profiles" className="text-2xl font-semibold">
+            ♡ HeartBridge
+          </Link>
+          {pathname === "/profiles" ? (
+            <BrowseFiltersButton onClick={dispatchToggleBrowseFilters} />
+          ) : null}
+        </div>
         <div className="flex flex-row items-center gap-2 md:gap-4">
           <CountLink href="/inbox" label="Inbox" count={unreadCount}>
             <Inbox size={24} />
