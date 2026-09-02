@@ -36,7 +36,7 @@ export async function saveMyMatrimonialProfile(rawValues: MatrimonialProfileForm
     };
   }
 
-  const photoPath = existing?.photoPath || session.user.image || "/profile1.avif";
+  const photoPath = existing?.photoPath || session.user.image || "/profile_male_1.avif";
   const privacyConsentAt =
     existing?.privacyConsentAt ??
     (values.acceptedPrivacyTerms || catalog.extraFields.requirePrivacyConsent
@@ -76,6 +76,8 @@ export async function saveMyMatrimonialProfile(rawValues: MatrimonialProfileForm
     ethnicity: catalog.extraFields.ethnicity ? values.ethnicity || "prefer_not_to_say" : null,
     isManglik: catalog.extraFields.manglik ? values.isManglik || null : null,
     photoPath,
+    medicalStatus: existing?.medicalStatus ?? "clear",
+    medicalNotes: existing?.medicalNotes ?? null,
     hideIncome: values.hideIncome,
     photosVisibleTo: values.photosVisibleTo,
     isPaused: existing?.isPaused ?? false,

@@ -36,7 +36,7 @@ export function ProfilePhoto({
 
   return (
     <Image
-      src={photoPath || "/profile1.avif"}
+      src={photoPath || "/profile_male_1.avif"}
       alt={`Photo of ${name}`}
       width={480}
       height={480}

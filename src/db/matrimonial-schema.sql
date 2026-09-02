@@ -94,8 +94,14 @@ CREATE TABLE IF NOT EXISTS matrimonial_profile (
   -- India: yes | no | unknown. Stored only; we do not run horoscope matching.
   is_manglik TEXT,
 
-  -- Public path (/profile1.avif) or a Google avatar URL.
+  -- Public path (/profile_male_1.avif) or a Google avatar URL.
   photo_path TEXT NOT NULL,
+
+  -- clear | has_notes. Shown only to members with a completed profile, never in public JSON.
+  medical_status TEXT NOT NULL DEFAULT 'clear' CHECK (medical_status IN ('clear', 'has_notes')),
+
+  -- Short disclosure when medical_status is has_notes. Null when clear.
+  medical_notes TEXT,
 
   -- 1 hides annual income on cards and the public profile.
   hide_income INTEGER NOT NULL DEFAULT 0,

@@ -64,6 +64,8 @@ export function mapSqlRowToMatrimonialProfile(row: Row): MatrimonialProfile {
     ethnicity: optionalText(row, "ethnicity"),
     isManglik: optionalText(row, "is_manglik"),
     photoPath: text(row, "photo_path"),
+    medicalStatus: text(row, "medical_status") === "has_notes" ? "has_notes" : "clear",
+    medicalNotes: optionalText(row, "medical_notes"),
     hideIncome: fromSqliteBoolean(integer(row, "hide_income")),
     photosVisibleTo: text(row, "photos_visible_to") as MatrimonialProfile["photosVisibleTo"],
     isPaused: fromSqliteBoolean(integer(row, "is_paused")),

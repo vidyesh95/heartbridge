@@ -105,7 +105,8 @@ async function insertSeedMember(client: ReturnType<typeof createClient>, member:
         city, region, religion, education, education_band, profession,
         annual_income_amount, income_currency, marital_status, diet, smoking, drinking,
         about_me, mother_tongue, community, family_type, is_only_child, has_children,
-        wants_children, languages_spoken, ethnicity, is_manglik, photo_path, hide_income,
+        wants_children, languages_spoken, ethnicity, is_manglik, photo_path, medical_status,
+        medical_notes, hide_income,
         photos_visible_to, is_paused, is_verified, privacy_consent_at,
         seed_will_reciprocate_likes, created_at, updated_at
       ) VALUES (
@@ -113,7 +114,8 @@ async function insertSeedMember(client: ReturnType<typeof createClient>, member:
         ?, ?, ?, ?, ?, ?,
         ?, ?, ?, ?, ?, ?,
         ?, ?, ?, ?, ?, ?,
-        ?, ?, ?, ?, ?, 0,
+        ?, ?, ?, ?, ?, ?,
+        ?, ?,
         'everyone', 0, 1, ?,
         ?, ?, ?
       )
@@ -149,6 +151,9 @@ async function insertSeedMember(client: ReturnType<typeof createClient>, member:
       member.ethnicity ?? null,
       member.isManglik ?? null,
       member.photoPath,
+      member.medicalStatus,
+      member.medicalStatus === "has_notes" ? (member.medicalNotes ?? null) : null,
+      member.hideIncome ? 1 : 0,
       member.country === "DE" ? timestamp : null,
       member.seedWillReciprocateLikes ? 1 : 0,
       timestamp,

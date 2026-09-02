@@ -44,6 +44,21 @@ async function migrateMatrimonialTables() {
     await client.execute(statement);
   }
 
+  const alterColumns = [
+    "ALTER TABLE matrimonial_profile ADD COLUMN medical_status TEXT NOT NULL DEFAULT 'clear'",
+    "ALTER TABLE matrimonial_profile ADD COLUMN medical_notes TEXT",
+  ];
+  for (const statement of alterColumns) {
+    try {
+      await client.execute(statement);
+    } catch (error: unknown) {
+      const message = error instanceof Error ? error.message : String(error);
+      if (!message.toLowerCase().includes("duplicate column")) {
+        throw error;
+      }
+    }
+  }
+
   console.log(`Applied ${statements.length} matrimonial schema statements.`);
 }
 

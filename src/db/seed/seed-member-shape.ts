@@ -34,6 +34,9 @@ export type SeedMember = {
   ethnicity?: string;
   isManglik?: string;
   photoPath: string;
+  hideIncome?: boolean;
+  medicalStatus: "clear" | "has_notes";
+  medicalNotes?: string | null;
   seedWillReciprocateLikes: boolean;
   preference: {
     minAge: number;

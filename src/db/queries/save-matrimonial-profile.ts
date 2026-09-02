@@ -12,7 +12,8 @@ export async function saveMatrimonialProfile(profile: ProfileWriteInput) {
         city, region, religion, education, education_band, profession,
         annual_income_amount, income_currency, marital_status, diet, smoking, drinking,
         about_me, mother_tongue, community, family_type, is_only_child, has_children,
-        wants_children, languages_spoken, ethnicity, is_manglik, photo_path, hide_income,
+        wants_children, languages_spoken, ethnicity, is_manglik, photo_path, medical_status,
+        medical_notes, hide_income,
         photos_visible_to, is_paused, is_verified, privacy_consent_at,
         seed_will_reciprocate_likes, created_at, updated_at
       ) VALUES (
@@ -21,8 +22,8 @@ export async function saveMatrimonialProfile(profile: ProfileWriteInput) {
         ?, ?, ?, ?, ?, ?,
         ?, ?, ?, ?, ?, ?,
         ?, ?, ?, ?, ?, ?,
-        ?, ?, ?, ?,
-        ?, ?, ?
+        ?, ?, ?, ?, ?,
+        ?, ?, ?, ?
       )
       ON CONFLICT(user_id) DO UPDATE SET
         display_name = excluded.display_name,
@@ -54,6 +55,8 @@ export async function saveMatrimonialProfile(profile: ProfileWriteInput) {
         ethnicity = excluded.ethnicity,
         is_manglik = excluded.is_manglik,
         photo_path = excluded.photo_path,
+        medical_status = excluded.medical_status,
+        medical_notes = excluded.medical_notes,
         hide_income = excluded.hide_income,
         photos_visible_to = excluded.photos_visible_to,
         is_paused = excluded.is_paused,
@@ -91,6 +94,8 @@ export async function saveMatrimonialProfile(profile: ProfileWriteInput) {
       profile.ethnicity,
       profile.isManglik,
       profile.photoPath,
+      profile.medicalStatus,
+      profile.medicalNotes,
       toSqliteBoolean(profile.hideIncome) ?? 0,
       profile.photosVisibleTo,
       toSqliteBoolean(profile.isPaused) ?? 0,

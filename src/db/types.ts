@@ -32,6 +32,8 @@ export type MatrimonialProfile = {
   ethnicity: string | null;
   isManglik: string | null;
   photoPath: string;
+  medicalStatus: "clear" | "has_notes";
+  medicalNotes: string | null;
   hideIncome: boolean;
   photosVisibleTo: "everyone" | "likes_only" | "matches_only";
   isPaused: boolean;

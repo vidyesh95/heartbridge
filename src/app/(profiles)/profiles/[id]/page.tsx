@@ -155,6 +155,16 @@ export default async function Profile({ params }: { params: Promise<{ id: string
           {profile.ethnicity && profile.ethnicity !== "prefer_not_to_say" ? (
             <Fact label="Ethnicity" value={profile.ethnicity} />
           ) : null}
+          {viewerCanAct ? (
+            <Fact
+              label="Medical history"
+              value={
+                profile.medicalStatus === "has_notes" && profile.medicalNotes
+                  ? profile.medicalNotes
+                  : "No known medical conditions"
+              }
+            />
+          ) : null}
         </dl>
 
         {preference ? (
