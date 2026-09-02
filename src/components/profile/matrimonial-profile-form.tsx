@@ -402,9 +402,13 @@ export function MatrimonialProfileForm({
                   <FormLabel>Yearly income ({catalog.currencySymbol})</FormLabel>
                   <FormControl>
                     <Input
-                      type="number"
-                      value={field.value}
-                      onChange={(event) => field.onChange(Number(event.target.value))}
+                      type="text"
+                      inputMode="numeric"
+                      autoComplete="off"
+                      className="tabular-nums"
+                      value={field.value === 0 ? "" : String(field.value)}
+                      onFocus={(event) => event.currentTarget.select()}
+                      onChange={(event) => field.onChange(parseDigitsToNumber(event.target.value))}
                     />
                   </FormControl>
                   <FormDescription>Stored in {catalog.currency}. You can hide this later.</FormDescription>
@@ -712,6 +716,11 @@ function SelectField({
       <FormMessage />
     </FormItem>
   );
+}
+
+function parseDigitsToNumber(raw: string) {
+  const digits = raw.replace(/\D/g, "");
+  return digits === "" ? 0 : Number(digits);
 }
 
 function NumberField({
