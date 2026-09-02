@@ -1,25 +1,26 @@
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/dashboard/app-sidebar";
 import { ProfileSummaryCard } from "@/components/profile/profile-summary-card";
-import { catalogForCountry } from "@/domain/countries/catalog-for-country";
+import { catalogForCountry, catalogForCountryOrIndia } from "@/domain/countries/catalog-for-country";
 import { parseBrowseSearchParams, type BrowseSearchParams } from "@/domain/profile/parse-browse-search-params";
 import { findProfilesThatMatchSearchFilters } from "@/db/queries/find-profiles-that-match-search-filters";
-import { requireCompletedMatrimonialProfile } from "@/lib/require-completed-matrimonial-profile";
+import { getOptionalBrowseViewer } from "@/lib/require-completed-matrimonial-profile";
 
 export default async function Profiles({
   searchParams,
 }: {
   searchParams: Promise<BrowseSearchParams>;
 }) {
-  const { session, profile } = await requireCompletedMatrimonialProfile();
+  const { session, profile } = await getOptionalBrowseViewer();
   const filters = parseBrowseSearchParams(await searchParams);
+  const viewerCanAct = Boolean(profile);
   const matches = await findProfilesThatMatchSearchFilters({
-    viewerUserId: session.user.id,
-    viewerGender: profile.gender,
-    viewerSeekingGender: profile.seekingGender,
+    viewerUserId: session?.user.id,
+    viewerGender: profile?.gender,
+    viewerSeekingGender: profile?.seekingGender,
     filters,
   });
-  const viewerCatalog = catalogForCountry(profile.country);
+  const viewerCatalog = profile ? catalogForCountry(profile.country) : catalogForCountryOrIndia(filters.country);
 
   return (
     <section>
@@ -27,6 +28,9 @@ export default async function Profiles({
         <h3 className="text-4xl text-secondary-foreground md:text-6xl">Browse profiles</h3>
         <p className="w-full max-w-2xl text-muted-foreground">
           {matches.length} {matches.length === 1 ? "profile matches" : "profiles match"} your filters
+          {viewerCanAct
+            ? ""
+            : ". Like, bookmark, and chat after you create your own profile."}
         </p>
       </hgroup>
       <SidebarProvider className="p-4">
@@ -45,6 +49,7 @@ export default async function Profiles({
                   profile={match}
                   viewerHasLiked={match.viewerHasLiked}
                   viewerHasBookmarked={match.viewerHasBookmarked}
+                  viewerCanAct={viewerCanAct}
                 />
               ))}
             </div>

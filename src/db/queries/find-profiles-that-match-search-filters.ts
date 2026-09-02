@@ -11,24 +11,30 @@ export type BrowsableProfile = MatrimonialProfile & {
 /**
  * Browse grid query. SQL handles cheap filters; age is computed in JS because we never store it.
  * Blocked people (either direction) and paused profiles never appear.
+ * Guests and agents omit viewerUserId and see both genders unless they pass a gender filter.
  */
 export async function findProfilesThatMatchSearchFilters(options: {
-  viewerUserId: string;
+  viewerUserId?: string;
   viewerGender?: "male" | "female";
   viewerSeekingGender?: "male" | "female";
   filters: ProfileSearchFilters;
 }): Promise<BrowsableProfile[]> {
-  const clauses = ["profile.is_paused = 0", "profile.user_id != ?"];
-  const args: Array<string | number> = [options.viewerUserId];
+  const clauses = ["profile.is_paused = 0"];
+  const args: Array<string | number> = [];
+  const viewerUserId = options.viewerUserId;
 
-  clauses.push(`
-    profile.user_id NOT IN (
-      SELECT blocked_user_id FROM profile_block WHERE blocker_user_id = ?
-      UNION
-      SELECT blocker_user_id FROM profile_block WHERE blocked_user_id = ?
-    )
-  `);
-  args.push(options.viewerUserId, options.viewerUserId);
+  if (viewerUserId) {
+    clauses.push("profile.user_id != ?");
+    args.push(viewerUserId);
+    clauses.push(`
+      profile.user_id NOT IN (
+        SELECT blocked_user_id FROM profile_block WHERE blocker_user_id = ?
+        UNION
+        SELECT blocker_user_id FROM profile_block WHERE blocked_user_id = ?
+      )
+    `);
+    args.push(viewerUserId, viewerUserId);
+  }
 
   if (options.filters.country && options.filters.country !== "all") {
     clauses.push("profile.country = ?");
@@ -81,8 +87,8 @@ export async function findProfilesThatMatchSearchFilters(options: {
   appendInList(clauses, args, "profile.education_band", options.filters.educationBands);
   appendInList(clauses, args, "profile.marital_status", options.filters.maritalStatuses);
 
-  const result = await getTursoClient().execute({
-    sql: `
+  const selectJoins = viewerUserId
+    ? `
       SELECT
         profile.*,
         CASE WHEN liked.liked_user_id IS NULL THEN 0 ELSE 1 END AS viewer_has_liked,
@@ -92,10 +98,23 @@ export async function findProfilesThatMatchSearchFilters(options: {
         ON liked.liked_user_id = profile.user_id AND liked.liker_user_id = ?
       LEFT JOIN profile_bookmark AS bookmarked
         ON bookmarked.bookmarked_user_id = profile.user_id AND bookmarked.bookmarker_user_id = ?
+    `
+    : `
+      SELECT
+        profile.*,
+        0 AS viewer_has_liked,
+        0 AS viewer_has_bookmarked
+      FROM matrimonial_profile AS profile
+    `;
+  const queryArgs = viewerUserId ? [viewerUserId, viewerUserId, ...args] : args;
+
+  const result = await getTursoClient().execute({
+    sql: `
+      ${selectJoins}
       WHERE ${clauses.join(" AND ")}
       ORDER BY profile.is_verified DESC, profile.created_at DESC
     `,
-    args: [options.viewerUserId, options.viewerUserId, ...args],
+    args: queryArgs,
   });
 
   const ageMin = options.filters.ageMin ?? 18;

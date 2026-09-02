@@ -20,10 +20,12 @@ export default function HeaderSection({
   likesCount = 0,
   bookmarksCount = 0,
   unreadCount = 0,
+  hasMatrimonialProfile = false,
 }: {
   likesCount?: number;
   bookmarksCount?: number;
   unreadCount?: number;
+  hasMatrimonialProfile?: boolean;
 }) {
   const router = useRouter();
   const { data: session, isPending } = authClient.useSession();
@@ -57,6 +59,11 @@ export default function HeaderSection({
           <CountLink href="/profiles/liked" label="Liked profiles" count={likesCount}>
             <Heart size={24} />
           </CountLink>
+          {user && !hasMatrimonialProfile && !isPending ? (
+            <Button className="h-10 cursor-pointer rounded-full" asChild>
+              <Link href="/onboarding">Create profile</Link>
+            </Button>
+          ) : null}
           {isPending ? (
             <div className="h-10 w-10 animate-pulse rounded-full bg-muted" />
           ) : user ? (

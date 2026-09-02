@@ -5,7 +5,7 @@ export function proxy(request: NextRequest) {
   const sessionCookie = getSessionCookie(request);
   const { pathname } = request.nextUrl;
 
-  if (!sessionCookie && (pathname.startsWith("/profiles") || pathname.startsWith("/admin"))) {
+  if (!sessionCookie && pathname.startsWith("/admin")) {
     const signIn = new URL("/sign-in", request.url);
     signIn.searchParams.set("callbackURL", pathname);
     return NextResponse.redirect(signIn);
@@ -15,5 +15,5 @@ export function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/profiles/:path*", "/admin/:path*"],
+  matcher: ["/admin/:path*"],
 };

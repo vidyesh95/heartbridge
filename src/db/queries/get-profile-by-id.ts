@@ -15,7 +15,7 @@ export type ProfileDetailForViewer = {
 
 export async function getProfileByIdForViewer(
   profileUserId: string,
-  viewerUserId: string,
+  viewerUserId?: string,
 ): Promise<ProfileDetailForViewer | null> {
   const client = getTursoClient();
 
@@ -28,44 +28,59 @@ export async function getProfileByIdForViewer(
     return null;
   }
 
-  const [preferenceResult, likeResult, bookmarkResult, theyLikedResult, blockResult, conversationResult] =
-    await Promise.all([
-      client.execute({
-        sql: "SELECT * FROM partner_preference WHERE user_id = ?",
-        args: [profileUserId],
-      }),
-      client.execute({
-        sql: "SELECT 1 FROM profile_like WHERE liker_user_id = ? AND liked_user_id = ?",
-        args: [viewerUserId, profileUserId],
-      }),
-      client.execute({
-        sql: "SELECT 1 FROM profile_bookmark WHERE bookmarker_user_id = ? AND bookmarked_user_id = ?",
-        args: [viewerUserId, profileUserId],
-      }),
-      client.execute({
-        sql: "SELECT 1 FROM profile_like WHERE liker_user_id = ? AND liked_user_id = ?",
-        args: [profileUserId, viewerUserId],
-      }),
-      client.execute({
-        sql: "SELECT 1 FROM profile_block WHERE blocker_user_id = ? AND blocked_user_id = ?",
-        args: [viewerUserId, profileUserId],
-      }),
-      client.execute({
-        sql: `
-          SELECT id FROM conversation
-          WHERE (member_a_id = ? AND member_b_id = ?) OR (member_a_id = ? AND member_b_id = ?)
-        `,
-        args: [viewerUserId, profileUserId, profileUserId, viewerUserId],
-      }),
-    ]);
-
+  const preferenceResult = await client.execute({
+    sql: "SELECT * FROM partner_preference WHERE user_id = ?",
+    args: [profileUserId],
+  });
   const preferenceRow = preferenceResult.rows[0];
+  const profile = mapSqlRowToMatrimonialProfile(profileRow);
+  const preference = preferenceRow ? mapSqlRowToPartnerPreference(preferenceRow) : null;
+
+  if (!viewerUserId) {
+    return {
+      profile,
+      preference,
+      viewerHasLiked: false,
+      viewerHasBookmarked: false,
+      theyLikedViewer: false,
+      isMutualMatch: false,
+      isBlockedByViewer: false,
+      conversationId: null,
+    };
+  }
+
+  const [likeResult, bookmarkResult, theyLikedResult, blockResult, conversationResult] = await Promise.all([
+    client.execute({
+      sql: "SELECT 1 FROM profile_like WHERE liker_user_id = ? AND liked_user_id = ?",
+      args: [viewerUserId, profileUserId],
+    }),
+    client.execute({
+      sql: "SELECT 1 FROM profile_bookmark WHERE bookmarker_user_id = ? AND bookmarked_user_id = ?",
+      args: [viewerUserId, profileUserId],
+    }),
+    client.execute({
+      sql: "SELECT 1 FROM profile_like WHERE liker_user_id = ? AND liked_user_id = ?",
+      args: [profileUserId, viewerUserId],
+    }),
+    client.execute({
+      sql: "SELECT 1 FROM profile_block WHERE blocker_user_id = ? AND blocked_user_id = ?",
+      args: [viewerUserId, profileUserId],
+    }),
+    client.execute({
+      sql: `
+        SELECT id FROM conversation
+        WHERE (member_a_id = ? AND member_b_id = ?) OR (member_a_id = ? AND member_b_id = ?)
+      `,
+      args: [viewerUserId, profileUserId, profileUserId, viewerUserId],
+    }),
+  ]);
+
   const viewerHasLiked = likeResult.rows.length > 0;
   const theyLikedViewer = theyLikedResult.rows.length > 0;
 
   return {
-    profile: mapSqlRowToMatrimonialProfile(profileRow),
-    preference: preferenceRow ? mapSqlRowToPartnerPreference(preferenceRow) : null,
+    profile,
+    preference,
     viewerHasLiked,
     viewerHasBookmarked: bookmarkResult.rows.length > 0,
     theyLikedViewer,

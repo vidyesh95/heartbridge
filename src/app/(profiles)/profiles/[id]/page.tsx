@@ -1,11 +1,13 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { BlockAndReportControls } from "@/components/profile/block-and-report-controls";
+import { ContinueOnHeartbridgeCard } from "@/components/profile/continue-on-heartbridge";
 import { LikeAndBookmarkButtons } from "@/components/profile/like-and-bookmark-buttons";
 import { ProfilePhoto } from "@/components/profile/profile-photo";
-import { catalogForCountry } from "@/domain/countries/catalog-for-country";
+import { catalogForCountry, catalogForCountryOrIndia } from "@/domain/countries/catalog-for-country";
 import {
   dietOptions,
   educationBandOptions,
@@ -23,13 +25,28 @@ import { formatIncomeForCountry } from "@/domain/display/format-income";
 import { formatCountryAndCity } from "@/domain/display/format-profile-location";
 import { canViewerSeeThisPhoto } from "@/domain/profile/can-viewer-see-this-photo";
 import { getProfileByIdForViewer } from "@/db/queries/get-profile-by-id";
-import { requireCompletedMatrimonialProfile } from "@/lib/require-completed-matrimonial-profile";
+import { getOptionalBrowseViewer } from "@/lib/require-completed-matrimonial-profile";
+
+export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
+  const { id } = await params;
+  const detail = await getProfileByIdForViewer(id);
+  if (!detail || detail.profile.isPaused) {
+    return { title: "Profile" };
+  }
+  const age = computeAgeFromDateOfBirth(detail.profile.dateOfBirth);
+  return {
+    title: `${detail.profile.displayName}, ${age}`,
+    description: `${detail.profile.displayName} is ${age} in ${detail.profile.city}. ${detail.profile.profession}.`,
+    alternates: { canonical: `/profiles/${id}` },
+  };
+}
 
 export default async function Profile({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
-  const { session, profile: viewerProfile } = await requireCompletedMatrimonialProfile();
+  const { session, profile: viewerProfile } = await getOptionalBrowseViewer();
+  const viewerCanAct = Boolean(viewerProfile);
 
-  if (id === session.user.id) {
+  if (session && id === session.user.id) {
     return (
       <section className="mx-auto max-w-3xl space-y-4 px-4 pt-24 text-center">
         <h1 className="text-4xl">This is your profile</h1>
@@ -40,14 +57,16 @@ export default async function Profile({ params }: { params: Promise<{ id: string
     );
   }
 
-  const detail = await getProfileByIdForViewer(id, session.user.id);
+  const detail = await getProfileByIdForViewer(id, session?.user.id);
   if (!detail || detail.profile.isPaused) {
     notFound();
   }
 
   const { profile, preference } = detail;
   const catalog = catalogForCountry(profile.country);
-  const viewerCatalog = catalogForCountry(viewerProfile.country);
+  const viewerCatalog = viewerProfile
+    ? catalogForCountry(viewerProfile.country)
+    : catalogForCountryOrIndia(profile.country);
   const age = computeAgeFromDateOfBirth(profile.dateOfBirth);
   const photoVisible = canViewerSeeThisPhoto(profile, {
     isOwnProfile: false,
@@ -73,17 +92,22 @@ export default async function Profile({ params }: { params: Promise<{ id: string
           profileUserId={profile.userId}
           initiallyLiked={detail.viewerHasLiked}
           initiallyBookmarked={detail.viewerHasBookmarked}
+          viewerCanAct={viewerCanAct}
         />
-        {detail.isMutualMatch && detail.conversationId ? (
-          <Button className="w-full" asChild>
-            <Link href={`/inbox/${detail.conversationId}`}>Open conversation</Link>
-          </Button>
+        {viewerCanAct ? (
+          detail.isMutualMatch && detail.conversationId ? (
+            <Button className="w-full" asChild>
+              <Link href={`/inbox/${detail.conversationId}`}>Open conversation</Link>
+            </Button>
+          ) : (
+            <p className="text-sm text-muted-foreground">
+              Messaging unlocks when you both like each other.
+            </p>
+          )
         ) : (
-          <p className="text-sm text-muted-foreground">
-            Messaging unlocks when you both like each other.
-          </p>
+          <ContinueOnHeartbridgeCard />
         )}
-        <BlockAndReportControls profileUserId={profile.userId} />
+        {viewerCanAct ? <BlockAndReportControls profileUserId={profile.userId} /> : null}
       </div>
 
       <div className="space-y-6">

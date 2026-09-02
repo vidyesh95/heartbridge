@@ -35,6 +35,23 @@ function commaList(value: string | undefined) {
   return items.length > 0 ? items : undefined;
 }
 
+export function browseSearchParamsFromUrl(searchParams: URLSearchParams): BrowseSearchParams {
+  return {
+    country: searchParams.get("country") ?? undefined,
+    gender: searchParams.get("gender") ?? undefined,
+    ageMin: searchParams.get("ageMin") ?? undefined,
+    ageMax: searchParams.get("ageMax") ?? undefined,
+    incomeMin: searchParams.get("incomeMin") ?? undefined,
+    incomeMax: searchParams.get("incomeMax") ?? undefined,
+    heightMinCm: searchParams.get("heightMinCm") ?? undefined,
+    heightMaxCm: searchParams.get("heightMaxCm") ?? undefined,
+    city: searchParams.get("city") ?? undefined,
+    religions: searchParams.get("religions") ?? undefined,
+    educationBands: searchParams.get("educationBands") ?? undefined,
+    maritalStatuses: searchParams.get("maritalStatuses") ?? undefined,
+  };
+}
+
 export function parseBrowseSearchParams(searchParams: BrowseSearchParams): ProfileSearchFilters {
   const country = searchParams.country;
   const gender = searchParams.gender;

@@ -17,12 +17,14 @@ export function ProfileSummaryCard({
   viewerHasBookmarked = false,
   isMutualMatch = false,
   showActions = true,
+  viewerCanAct = true,
 }: {
   profile: MatrimonialProfile;
   viewerHasLiked?: boolean;
   viewerHasBookmarked?: boolean;
   isMutualMatch?: boolean;
   showActions?: boolean;
+  viewerCanAct?: boolean;
 }) {
   const catalog = catalogForCountry(profile.country);
   const age = computeAgeFromDateOfBirth(profile.dateOfBirth);
@@ -61,6 +63,7 @@ export function ProfileSummaryCard({
             profileUserId={profile.userId}
             initiallyLiked={viewerHasLiked}
             initiallyBookmarked={viewerHasBookmarked}
+            viewerCanAct={viewerCanAct}
           />
         </CardFooter>
       ) : null}

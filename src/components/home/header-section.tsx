@@ -24,18 +24,16 @@ export default function HeaderSection() {
           ♡ HeartBridge
         </Link>
         <div className="flex items-center gap-3">
+          <Button variant="outline" asChild>
+            <Link href={"/profiles"}>Browse profiles</Link>
+          </Button>
           {isPending ? (
             <div className="h-10 w-28 animate-pulse rounded-md bg-muted" />
           ) : user ? (
-            <>
-              <Button asChild>
-                <Link href={"/profiles"}>Browse profiles</Link>
-              </Button>
-              <Avatar className="h-10 w-10">
-                <AvatarImage src={user.image ?? undefined} alt={user.name} />
-                <AvatarFallback>{(user.name ?? "U").slice(0, 2).toUpperCase()}</AvatarFallback>
-              </Avatar>
-            </>
+            <Avatar className="h-10 w-10">
+              <AvatarImage src={user.image ?? undefined} alt={user.name} />
+              <AvatarFallback>{(user.name ?? "U").slice(0, 2).toUpperCase()}</AvatarFallback>
+            </Avatar>
           ) : (
             <Button asChild>
               <Link href={"/sign-in"}>Get Started</Link>
