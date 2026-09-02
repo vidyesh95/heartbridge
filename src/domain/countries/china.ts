@@ -1,0 +1,41 @@
+import type { CountryCatalog } from "@/domain/countries/supported-countries";
+
+export const chinaCatalog: CountryCatalog = {
+  code: "CN",
+  englishName: "China",
+  currency: "CNY",
+  currencySymbol: "¥",
+  heightDisplayUnit: "centimeters",
+  incomeSliderMax: 1_200_000,
+  incomeSliderStep: 10_000,
+  religions: [
+    { value: "None", label: "None / secular" },
+    { value: "Buddhist", label: "Buddhist" },
+    { value: "Christian", label: "Christian" },
+    { value: "Muslim", label: "Muslim" },
+    { value: "Taoist", label: "Taoist" },
+    { value: "prefer_not_to_say", label: "Prefer not to say" },
+    { value: "Other", label: "Other" },
+  ],
+  cities: [
+    { city: "Beijing", region: "Beijing" },
+    { city: "Shanghai", region: "Shanghai" },
+    { city: "Shenzhen", region: "Guangdong" },
+    { city: "Guangzhou", region: "Guangdong" },
+    { city: "Hangzhou", region: "Zhejiang" },
+    { city: "Chengdu", region: "Sichuan" },
+    { city: "Nanjing", region: "Jiangsu" },
+    { city: "Wuhan", region: "Hubei" },
+    { city: "Xi'an", region: "Shaanxi" },
+    { city: "Suzhou", region: "Jiangsu" },
+  ],
+  extraFields: {
+    motherTongue: false,
+    community: false,
+    familyType: false,
+    onlyChild: true,
+    ethnicity: false,
+    manglik: false,
+    requirePrivacyConsent: false,
+  },
+};

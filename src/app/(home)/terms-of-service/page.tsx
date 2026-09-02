@@ -31,7 +31,7 @@ export default function TermsOfService() {
                 <li>Be at least 18 years of age</li>
                 <li>Be legally eligible to marry under applicable law</li>
                 <li>Provide accurate and truthful information</li>
-                <li>Not be married or in a committed relationship</li>
+                <li>Be honest about marital status (never married, divorced, widowed, or separated)</li>
                 <li>Use the service for legitimate matrimonial purposes only</li>
               </ul>
             </li>
@@ -75,15 +75,12 @@ export default function TermsOfService() {
             </li>
             <li className="space-y-4">
               <h4 className="text-2xl font-semibold text-secondary-foreground before:content-[counter(section-counter)'.\00a0'] before:[counter-increment:section-counter]">
-                Payment and Subscription Terms
+                Fees
               </h4>
-              <p>For premium services:</p>
-              <ul className="list-inside list-disc space-y-2 text-muted-foreground">
-                <li>All fees are non-refundable unless otherwise stated</li>
-                <li>Subscriptions auto-renew unless cancelled</li>
-                <li>We reserve the right to change pricing with notice</li>
-                <li>Payment information must be accurate and current</li>
-              </ul>
+              <p>
+                HeartBridge is free. There is no subscription and we do not take payment card
+                details. If that changes, we will update these terms first.
+              </p>
             </li>
             <li className="space-y-4">
               <h4 className="text-2xl font-semibold text-secondary-foreground before:content-[counter(section-counter)'.\00a0'] before:[counter-increment:section-counter]">

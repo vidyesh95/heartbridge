@@ -8,9 +8,8 @@ export default function FooterSection() {
           <div>
             <h1 className={"mb-2 text-2xl font-semibold text-primary-foreground"}>HeartBridge ♡</h1>
             <p className={"text-primary-foreground"}>
-              India&apos;s premier matrimonial platform combining traditional matchmaking with
-              modern technology. Find your perfect life partner with our trusted, family-first
-              approach.
+              A free matrimonial site for India, China, the United States, and Germany. Browse,
+              like, and message after a mutual like.
             </p>
             <p className={"mt-2 text-lg text-primary-foreground"}>
               WhatsApp 💬&nbsp;&nbsp;<span className={"font-semibold"}>+91 98765 43210</span>
@@ -52,7 +51,7 @@ export default function FooterSection() {
           <p className={"text-primary-foreground"}>
             Copyright Ⓒ 2025 HeartBridge. All rights reserved.
           </p>
-          <p className={"text-primary-foreground"}>Trusted by thousands of families worldwide.</p>
+          <p className={"text-primary-foreground"}>India · China · United States · Germany</p>
         </div>
       </div>
     </footer>

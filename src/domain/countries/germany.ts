@@ -1,0 +1,40 @@
+import type { CountryCatalog } from "@/domain/countries/supported-countries";
+
+export const germanyCatalog: CountryCatalog = {
+  code: "DE",
+  englishName: "Germany",
+  currency: "EUR",
+  currencySymbol: "€",
+  heightDisplayUnit: "centimeters",
+  incomeSliderMax: 200_000,
+  incomeSliderStep: 2_000,
+  religions: [
+    { value: "prefer_not_to_say", label: "Prefer not to say" },
+    { value: "Christian", label: "Christian" },
+    { value: "Muslim", label: "Muslim" },
+    { value: "Jewish", label: "Jewish" },
+    { value: "None", label: "None / secular" },
+    { value: "Other", label: "Other" },
+  ],
+  cities: [
+    { city: "Berlin", region: "Berlin" },
+    { city: "Munich", region: "Bavaria" },
+    { city: "Hamburg", region: "Hamburg" },
+    { city: "Cologne", region: "North Rhine-Westphalia" },
+    { city: "Frankfurt", region: "Hesse" },
+    { city: "Stuttgart", region: "Baden-Württemberg" },
+    { city: "Düsseldorf", region: "North Rhine-Westphalia" },
+    { city: "Leipzig", region: "Saxony" },
+    { city: "Dresden", region: "Saxony" },
+    { city: "Hannover", region: "Lower Saxony" },
+  ],
+  extraFields: {
+    motherTongue: false,
+    community: false,
+    familyType: false,
+    onlyChild: false,
+    ethnicity: false,
+    manglik: false,
+    requirePrivacyConsent: true,
+  },
+};

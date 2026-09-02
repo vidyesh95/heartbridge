@@ -6,86 +6,87 @@ import {
 } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { Mail, Phone } from "lucide-react";
+import { Mail } from "lucide-react";
 
 const faqsValues = [
   {
     id: "item1",
     question: "How do I create a profile on HeartBridge?",
     answer:
-      "Creating a profile is simple! Click on 'Register' and fill out the registration form with your basic details. You can then complete your profile by adding photos, personal information, family background, and partner preferences. Our team will verify your profile within 24-48 hours.",
+      "Sign in with Google. We then ask which country you live in (India, China, the United States, or Germany) and walk you through basics, a short bio, partner preferences, and privacy settings. Your photo starts as your Google avatar.",
   },
   {
     id: "item2",
     question: "Is my personal information secure?",
     answer:
-      "Absolutely! We take privacy and security very seriously. All personal information is encrypted and stored securely. We never share your contact details without your explicit permission. You have full control over who can view your profile and contact you.",
+      "We store your profile on a private database and never sell it. You choose who can see your photo and whether income is public. German members must accept the privacy policy before a profile is created. Anyone can export or delete their data from Settings.",
   },
   {
     id: "item3",
-    question: "How does the matching process work?",
+    question: "How does matching work?",
     answer:
-      "Our intelligent matching algorithm considers your preferences, background, education,location, and other compatibility factors. You can browse profiles that match your criteria, and our matchmakers also provide personalized recommendations based on your preferences.",
+      "Browse filters by country, age, religion, education, city, height, and marital status. We also hide people who are not looking for your gender. Like a profile; if they like you back — or they are a demo member who reciprocates — you can message them.",
   },
   {
     id: "item4",
-    question: "What is the verification process?",
+    question: "Are profiles verified?",
     answer:
-      "We verify all profiles through multiple steps including phone verification, document verification (ID proof, education certificates), and photo verification. This ensures that all members are genuine and serious about finding a life partner.",
+      "Demo members are marked verified. For real accounts, an admin can add or remove a verification badge. We do not yet check government IDs or run phone OTP.",
   },
   {
     id: "item5",
-    question: "How much does it cost to use HeartBridge?",
+    question: "How much does it cost?",
     answer:
-      "We offer various membership plans to suit different needs. Basic registration is free, which allows you to create a profile and browse matches. Premium memberships unlock additional features like unlimited messaging, priority customer support, and enhanced privacy controls.",
+      "HeartBridge is free right now. Creating a profile, browsing, liking, bookmarking, and messaging after a mutual like do not require a paid plan.",
   },
   {
     id: "item6",
     question: "Can I contact matches directly?",
     answer:
-      "Yes, premium members can send direct messages to their matches. Free members can express interest, and if the interest is mutual, they can connect. We also facilitate introductions through our matchmaking team when both families are interested.",
+      "Yes, after both people like each other. Until then you can like or bookmark a profile. There is no paid shortcut and no human matchmaker in the middle.",
   },
   {
     id: "item7",
-    question: "What if I don't find suitable matches?",
+    question: "What if I do not find suitable matches?",
     answer:
-      "Our dedicated matchmaking team works personally with members who need additional assistance. We also regularly add new profiles, so we recommend staying active and updating your preferences as needed. Our customer support team is always available to help optimize your search.",
+      "Widen the filters, update your partner preferences on My profile, or try another country. New members appear as they sign up. You can also write to us from the contact page.",
   },
   {
     id: "item8",
-    question: "How do I report inappropriate behavior or profiles?",
+    question: "How do I report inappropriate behavior?",
     answer:
-      "We have zero tolerance for inappropriate behavior. You can report any suspicious profiles or misconduct using the 'Report' button on profiles or by contacting our customer support team directly. We investigate all reports promptly and take appropriate action.",
+      "Open a profile and use Report, or Block to hide each other. Admins see reports on the admin page.",
   },
   {
     id: "item9",
     question: "Can I pause or delete my profile?",
     answer:
-      "Yes, you can pause your profile at any time if you want to take a break. You can also permanently delete your profile if you no longer wish to use our services. All your data will be removed from our system as per our privacy policy.",
+      "Yes. Settings lets you pause (hidden from browse), export a JSON copy of your data, or permanently delete your account, likes, and messages.",
   },
   {
     id: "item10",
-    question: "Do you provide assistance with the first meeting?",
+    question: "Do you arrange first meetings?",
     answer:
-      "Absolutely! Our experienced team helps coordinate first meetings between families. We provide guidance on the process and can even facilitate the initial introduction call between families if both parties agree.",
+      "No. After a mutual like you talk in Inbox and arrange anything yourselves. We do not send staff to meetings.",
   },
 ];
+
 export default function FrequentlyAskedQuestionsSection() {
   return (
     <section
-      id={"frequently-asked-questions"}
-      className={"flex flex-col items-center justify-center gap-16 bg-secondary px-4 py-32 md:px-0"}
+      id="frequently-asked-questions"
+      className="flex flex-col items-center justify-center gap-16 bg-secondary px-4 py-32 md:px-0"
     >
-      <hgroup className={"space-y-4 text-center md:space-y-8"}>
-        <h3 className={"text-4xl text-secondary-foreground md:text-6xl"}>
+      <hgroup className="space-y-4 text-center md:space-y-8">
+        <h3 className="text-4xl text-secondary-foreground md:text-6xl">
           Frequently Asked Questions
         </h3>
-        <p className={"max-w-xl text-muted-foreground"}>
-          Find answers to common questions about HeartBridge
+        <p className="max-w-xl text-muted-foreground">
+          What HeartBridge actually does today
         </p>
       </hgroup>
-      <div className={"w-full max-w-5xl"}>
-        <Accordion type={"multiple"} defaultValue={faqsValues.map((faqItem) => faqItem.id)}>
+      <div className="w-full max-w-5xl">
+        <Accordion type="multiple" defaultValue={faqsValues.map((faqItem) => faqItem.id)}>
           {faqsValues.map((faqItem) => (
             <AccordionItem key={faqItem.id} value={faqItem.id}>
               <AccordionTrigger>{faqItem.question}</AccordionTrigger>
@@ -94,27 +95,14 @@ export default function FrequentlyAskedQuestionsSection() {
           ))}
         </Accordion>
       </div>
-      <div
-        className={
-          "flex w-full max-w-5xl flex-col items-center justify-center gap-4 rounded-xl bg-card p-4 md:p-8"
-        }
-      >
-        <h5 className={"text-2xl text-card-foreground md:text-3xl"}>Still have questions?</h5>
-        <p className={"text-center text-muted-foreground"}>
-          Our customer support team is here to help you with any additional questions or concerns.
-        </p>
-        <div className={"mt-4 flex w-full flex-col gap-4 md:w-auto md:flex-row"}>
-          <Button variant={"outline"} asChild>
-            <Link href={"tel:+919876543210"}>
-              Call Us <Phone />: +91 98765 43210
-            </Link>
-          </Button>
-          <Button variant={"default"} asChild>
-            <Link href={"/"}>
-              Contact Support <Mail />
-            </Link>
-          </Button>
-        </div>
+      <div className="flex w-full max-w-5xl flex-col items-center justify-center gap-4 rounded-xl bg-card p-4 md:p-8">
+        <h5 className="text-2xl text-card-foreground md:text-3xl">Still have questions?</h5>
+        <p className="text-center text-muted-foreground">Write to us from the contact page.</p>
+        <Button variant="default" asChild>
+          <Link href="/contact">
+            Contact support <Mail />
+          </Link>
+        </Button>
       </div>
     </section>
   );

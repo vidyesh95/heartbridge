@@ -9,7 +9,7 @@ export default function About() {
       <hgroup className={"space-y-4 text-center md:space-y-8"}>
         <h3 className={"text-4xl text-secondary-foreground md:text-6xl"}>About HeartBridge</h3>
         <p className={"max-w-xl text-muted-foreground"}>
-          Connecting hearts, bridging families since 2025
+          A free matrimonial site for India, China, the United States, and Germany
         </p>
       </hgroup>
       <Card className={"w-full max-w-5xl"}>
@@ -18,10 +18,9 @@ export default function About() {
         </CardHeader>
         <CardContent>
           <p>
-            At HeartBridge Classic, we believe that finding your life partner should be a journey
-            filled with hope, respect, and tradition. Our mission is to create meaningful
-            connections between families while honoring the timeless values that make relationships
-            last.
+            HeartBridge helps people who want marriage find each other. You sign in with Google,
+            create a profile that matches how your country talks about height, money, and family,
+            then browse, like, and message after a mutual like.
           </p>
         </CardContent>
       </Card>
@@ -40,15 +39,14 @@ export default function About() {
           <div>
             <h5>Trust & Security</h5>
             <p>
-              Every profile is verified to ensure a safe and trustworthy environment for all our
-              members.
+              You can hide income, restrict photos, block or report members, and delete your account.
+              Admins can add a verification badge; we do not run background checks yet.
             </p>
           </div>
           <div>
-            <h5>Personal Touch</h5>
+            <h5>Direct contact</h5>
             <p>
-              Our dedicated matchmakers provide personalized service to help you find your perfect
-              match.
+              After a mutual like you talk in Inbox. There is no paid matchmaker and no subscription.
             </p>
           </div>
           <div>
@@ -65,11 +63,11 @@ export default function About() {
           <CardTitle>Why Choose Us?</CardTitle>
         </CardHeader>
         <CardContent>
-          <li>Over 10 years of experience in matrimonial services</li>
-          <li>Thousands of successful matches and happy families</li>
-          <li>Verified profiles with comprehensive background checks</li>
-          <li>Dedicated customer support and matchmaking assistance</li>
-          <li>Modern technology combined with traditional values</li>
+          <li>Country-aware profiles for India, China, the United States, and Germany</li>
+          <li>Working browse filters, likes, bookmarks, and mutual-like messaging</li>
+          <li>Pause, export, and delete your data from Settings</li>
+          <li>Report and block tools, plus an admin inbox for reports</li>
+          <li>Free to use — no premium plan</li>
         </CardContent>
       </Card>
     </section>

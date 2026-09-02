@@ -4,6 +4,8 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import React from "react";
 import ReactQueryProvider from "@/providers/react-query-provider";
+import { ThemeProvider } from "@/components/theme-provider";
+import { Toaster } from "@/components/ui/sonner";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -21,16 +23,15 @@ export const metadata: Metadata = {
     template: "%s | HeartBridge",
   },
   description:
-    "HeartBridge is a traditional yet modern Indian matrimonial platform. Browse verified profiles, express interest, and let our human match‑makers arrange safe offline meetings.",
+    "HeartBridge is a matrimonial platform for India, China, the United States, and Germany. Create a country-aware profile, browse matches, like people, and message when the interest is mutual.",
   keywords: [
     "matrimonial",
-    "Indian marriage",
-    "arranged marriage",
+    "marriage",
     "matchmaking",
-    "bride",
-    "groom",
-    "shaadi",
-    "wedding",
+    "India",
+    "China",
+    "United States",
+    "Germany",
     "HeartBridge",
   ],
   authors: [{ name: "HeartBridge Team" }],
@@ -48,7 +49,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "HeartBridge – Trusted Matrimonial Matches",
     description:
-      "Discover compatible brides and grooms on HeartBridge. Verified profiles, secure payments, and personal match‑maker support.",
+      "Browse matrimonial profiles in India, China, the United States, and Germany. Like, match, and message — free.",
     url: "https://heartbridge.in",
     siteName: "HeartBridge",
     images: [
@@ -65,8 +66,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "HeartBridge – Trusted Matrimonial Matches",
-    description:
-      "Browse verified Indian matrimonial profiles and let our team arrange safe introductions.",
+    description: "Create a profile, browse matches, and message after a mutual like.",
     images: ["/twitter-image.jpg"],
     creator: "@HeartBridge",
   },
@@ -96,7 +96,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
         {process.env.NODE_ENV === "development" && (
           <Script
@@ -107,7 +107,12 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         )}
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <ReactQueryProvider>{children}</ReactQueryProvider>
+        <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
+          <ReactQueryProvider>
+            {children}
+            <Toaster />
+          </ReactQueryProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

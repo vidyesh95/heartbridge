@@ -94,8 +94,8 @@ export default function SuccessStoriesSection() {
               <Quote size={48} className={"text-muted"} />
             </div>
             <p className={"mt-2 mb-8 text-muted-foreground"}>
-              Their dedicated matchmaker guided us through every step, from the first introduction
-              to our engagement ceremony.
+              We liked each other on HeartBridge, talked in the inbox, and our families met after
+              that.
             </p>
             <hr />
             <p className={"mt-8 text-lg font-semibold text-foreground"}>Maibam & Ningthoujam</p>

@@ -1,0 +1,55 @@
+import type { CountryCatalog } from "@/domain/countries/supported-countries";
+
+export const unitedStatesCatalog: CountryCatalog = {
+  code: "US",
+  englishName: "United States",
+  currency: "USD",
+  currencySymbol: "$",
+  heightDisplayUnit: "feet_and_inches",
+  incomeSliderMax: 400_000,
+  incomeSliderStep: 5_000,
+  religions: [
+    { value: "Christian", label: "Christian" },
+    { value: "Jewish", label: "Jewish" },
+    { value: "Muslim", label: "Muslim" },
+    { value: "Hindu", label: "Hindu" },
+    { value: "Buddhist", label: "Buddhist" },
+    { value: "None", label: "None / secular" },
+    { value: "prefer_not_to_say", label: "Prefer not to say" },
+    { value: "Other", label: "Other" },
+  ],
+  cities: [
+    { city: "New York", region: "New York" },
+    { city: "Los Angeles", region: "California" },
+    { city: "Chicago", region: "Illinois" },
+    { city: "Houston", region: "Texas" },
+    { city: "Austin", region: "Texas" },
+    { city: "Seattle", region: "Washington" },
+    { city: "Boston", region: "Massachusetts" },
+    { city: "Atlanta", region: "Georgia" },
+    { city: "Denver", region: "Colorado" },
+    { city: "San Francisco", region: "California" },
+  ],
+  extraFields: {
+    motherTongue: false,
+    community: false,
+    familyType: false,
+    onlyChild: false,
+    ethnicity: true,
+    manglik: false,
+    requirePrivacyConsent: false,
+  },
+};
+
+export const unitedStatesEthnicityOptions = [
+  { value: "prefer_not_to_say", label: "Prefer not to say" },
+  { value: "asian", label: "Asian" },
+  { value: "black", label: "Black / African American" },
+  { value: "hispanic", label: "Hispanic / Latino" },
+  { value: "white", label: "White" },
+  { value: "middle_eastern", label: "Middle Eastern / North African" },
+  { value: "native", label: "American Indian / Alaska Native" },
+  { value: "pacific_islander", label: "Native Hawaiian / Pacific Islander" },
+  { value: "multiracial", label: "Multiracial" },
+  { value: "other", label: "Other" },
+] as const;

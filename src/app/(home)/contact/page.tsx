@@ -16,6 +16,8 @@ import {
 import { useForm } from "react-hook-form";
 import { z } from "zod/v4";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { toast } from "sonner";
+import { submitContactForm } from "@/app/actions/inbox-and-settings-actions";
 
 const formSchema = z.object({
   firstName: z.string().min(1, { error: "Username must be at least 1 character long" }),
@@ -43,8 +45,21 @@ export default function Contact() {
     },
   });
 
-  function onSubmit() {
-    console.log("hello");
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    try {
+      await submitContactForm({
+        firstName: values.firstName,
+        lastName: values.lastName,
+        email: values.email,
+        phone: values.phone,
+        subject: values.subject,
+        body: values.message,
+      });
+      toast.success("Message saved. An admin can read it on the admin page.");
+      form.reset();
+    } catch {
+      toast.error("Could not save your message. Try again.");
+    }
   }
 
   return (
@@ -113,8 +128,8 @@ export default function Contact() {
               <div>
                 <h5 className={"font-semibold text-primary"}>Email Support</h5>
                 <p className={"text-muted-foreground"}>We will respond within 24 hours</p>
-                <p className={"text-primary"}>support@heartbridgeclassic.com</p>
-                <p className={"text-primary"}>info@heartbridgeclassic.com</p>
+                <p className={"text-primary"}>support@heartbridge.in</p>
+                <p className={"text-primary"}>info@heartbridge.in</p>
               </div>
             </CardContent>
           </Card>
@@ -235,7 +250,7 @@ export default function Contact() {
                 />
                 <FormField
                   control={form.control}
-                  name={"message"}
+                  name={"subject"}
                   render={({ field }) => (
                     <FormItem className={"space-y-1 md:space-y-2"}>
                       <FormLabel htmlFor={"subject"}>Subject</FormLabel>
