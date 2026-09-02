@@ -103,7 +103,6 @@ export function AppSidebar({
     });
     const query = params.toString();
     router.push(query ? `/profiles?${query}` : "/profiles");
-    closeFilters();
   }
 
   const incomeRange = form.watch("incomeRange");
@@ -203,9 +202,9 @@ export function AppSidebar({
           </SidebarGroup>
 
           <SidebarGroup>
-            <SidebarGroupLabel>City</SidebarGroupLabel>
+            <SidebarGroupLabel>City or region</SidebarGroupLabel>
             <SidebarGroupContent>
-              <Input placeholder="Mumbai, Berlin, Austin…" {...form.register("city")} />
+              <Input placeholder="Mumbai, Maharashtra, Berlin…" {...form.register("city")} />
             </SidebarGroupContent>
           </SidebarGroup>
 
@@ -234,7 +233,6 @@ export function AppSidebar({
             variant="outline"
             onClick={() => {
               router.push("/profiles");
-              closeFilters();
             }}
           >
             Reset

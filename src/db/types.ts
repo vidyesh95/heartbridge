@@ -70,6 +70,7 @@ export type ProfileSearchFilters = {
   heightMinCm?: number;
   heightMaxCm?: number;
   city?: string;
+  region?: string;
   religions?: string[];
   educationBands?: string[];
   maritalStatuses?: string[];

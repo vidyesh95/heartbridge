@@ -16,6 +16,7 @@ export type BrowseSearchParams = {
   heightMinCm?: BrowseParamValue;
   heightMaxCm?: BrowseParamValue;
   city?: BrowseParamValue;
+  region?: BrowseParamValue;
   religions?: BrowseParamValue;
   educationBands?: BrowseParamValue;
   maritalStatuses?: BrowseParamValue;
@@ -68,6 +69,7 @@ export function browseSearchParamsFromUrl(searchParams: URLSearchParams): Browse
     heightMinCm: searchParams.getAll("heightMinCm"),
     heightMaxCm: searchParams.getAll("heightMaxCm"),
     city: searchParams.getAll("city"),
+    region: searchParams.getAll("region"),
     religions: searchParams.getAll("religions"),
     educationBands: searchParams.getAll("educationBands"),
     maritalStatuses: searchParams.getAll("maritalStatuses"),
@@ -94,6 +96,7 @@ export function parseBrowseSearchParams(searchParams: BrowseSearchInput): Profil
     heightMinCm: optionalNumber(firstScalar(readValues(searchParams, "heightMinCm"))),
     heightMaxCm: optionalNumber(firstScalar(readValues(searchParams, "heightMaxCm"))),
     city: firstScalar(readValues(searchParams, "city")),
+    region: firstScalar(readValues(searchParams, "region")),
     religions: flattenList(readValues(searchParams, "religions")),
     educationBands: flattenList(readValues(searchParams, "educationBands")),
     maritalStatuses: flattenList(readValues(searchParams, "maritalStatuses")),
@@ -111,6 +114,7 @@ export function compactBrowseFilters(filters: ProfileSearchFilters): ProfileSear
     ...(filters.heightMinCm !== undefined ? { heightMinCm: filters.heightMinCm } : {}),
     ...(filters.heightMaxCm !== undefined ? { heightMaxCm: filters.heightMaxCm } : {}),
     ...(filters.city ? { city: filters.city } : {}),
+    ...(filters.region ? { region: filters.region } : {}),
     ...(filters.religions?.length ? { religions: filters.religions } : {}),
     ...(filters.educationBands?.length ? { educationBands: filters.educationBands } : {}),
     ...(filters.maritalStatuses?.length ? { maritalStatuses: filters.maritalStatuses } : {}),
@@ -129,6 +133,7 @@ export function browseFiltersToSearchParams(filters: ProfileSearchFilters) {
   if (compact.heightMinCm !== undefined) params.set("heightMinCm", String(compact.heightMinCm));
   if (compact.heightMaxCm !== undefined) params.set("heightMaxCm", String(compact.heightMaxCm));
   if (compact.city) params.set("city", compact.city);
+  if (compact.region) params.set("region", compact.region);
   if (compact.religions?.length) params.set("religions", compact.religions.join(","));
   if (compact.educationBands?.length) params.set("educationBands", compact.educationBands.join(","));
   if (compact.maritalStatuses?.length) {

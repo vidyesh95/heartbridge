@@ -11,7 +11,7 @@ export const PUBLIC_AVAILABLE_FILTERS = {
   educationBands: educationBandOptions.map((option) => option.value),
   maritalStatuses: maritalStatusOptions.map((option) => option.value),
   religions: religionsAcrossAllCountries().map((option) => option.value),
-  ranges: ["ageMin", "ageMax", "city", "incomeMin", "incomeMax", "heightMinCm", "heightMaxCm"],
+  ranges: ["ageMin", "ageMax", "city", "region", "incomeMin", "incomeMax", "heightMinCm", "heightMaxCm"],
 };
 
 export type PublicProfileListing = {

@@ -25,7 +25,7 @@ JSON omits email, phone, Google account data, like state, and conversation ids. 
 
 ## Filter query params
 
-Same names on /profiles and /api/public/profiles. Country and gender are case-insensitive. List params accept commas or repeated keys (religions=Hindu,Sikh or religions=Hindu&religions=Sikh). Religion, education, and marital status match case-insensitively. incomeMin and incomeMax apply only when one country is selected.
+Same names on /profiles and /api/public/profiles. Country and gender are case-insensitive. List params accept commas or repeated keys (religions=Hindu,Sikh or religions=Hindu&religions=Sikh). Religion, education, and marital status match case-insensitively. city and region match either the city or the state/region (so city=Maharashtra or region=Goa both work). incomeMin and incomeMax apply only when one country is selected.
 
 - country: ${PUBLIC_AVAILABLE_FILTERS.country.join(", ")}
 - gender: ${PUBLIC_AVAILABLE_FILTERS.gender.join(", ")}

@@ -56,9 +56,22 @@ export async function findProfilesThatMatchSearchFilters(options: {
     args.push(options.viewerGender);
   }
 
-  if (options.filters.city?.trim()) {
-    clauses.push("LOWER(profile.city) LIKE ?");
-    args.push(`%${options.filters.city.trim().toLowerCase()}%`);
+  const locationTerms = [
+    ...new Set(
+      [options.filters.city, options.filters.region].flatMap((value) =>
+        value
+          ? value
+              .split(",")
+              .map((item) => item.trim())
+              .filter(Boolean)
+          : [],
+      ),
+    ),
+  ];
+  for (const term of locationTerms) {
+    clauses.push("(LOWER(profile.city) LIKE ? OR LOWER(profile.region) LIKE ?)");
+    const like = `%${term.toLowerCase()}%`;
+    args.push(like, like);
   }
 
   // Income numbers only make sense inside one currency, so we apply them when a country is chosen.
