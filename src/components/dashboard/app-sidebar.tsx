@@ -48,9 +48,11 @@ type FilterFormValues = {
 export function AppSidebar({
   viewerCatalog,
   initialFilters,
+  defaultGender = "all",
 }: {
   viewerCatalog: CountryCatalog;
   initialFilters: ProfileSearchFilters;
+  defaultGender?: FilterFormValues["gender"];
 }) {
   const router = useRouter();
   const { setOpen, setOpenMobile } = useSidebar();
@@ -59,7 +61,7 @@ export function AppSidebar({
   const form = useForm<FilterFormValues>({
     defaultValues: {
       country: initialFilters.country ?? "all",
-      gender: initialFilters.gender ?? "all",
+      gender: initialFilters.gender ?? defaultGender,
       ageRange: [initialFilters.ageMin ?? BROWSE_AGE_RANGE.min, initialFilters.ageMax ?? BROWSE_AGE_RANGE.max],
       incomeRange: [initialFilters.incomeMin ?? 0, initialFilters.incomeMax ?? viewerCatalog.incomeSliderMax],
       heightRange: [
@@ -232,6 +234,17 @@ export function AppSidebar({
             type="button"
             variant="outline"
             onClick={() => {
+              form.reset({
+                country: "all",
+                gender: defaultGender,
+                ageRange: [BROWSE_AGE_RANGE.min, BROWSE_AGE_RANGE.max],
+                incomeRange: [0, viewerCatalog.incomeSliderMax],
+                heightRange: [BROWSE_HEIGHT_RANGE_CM.min, BROWSE_HEIGHT_RANGE_CM.max],
+                city: "",
+                religions: [],
+                educationBands: [],
+                maritalStatuses: [],
+              });
               router.push("/profiles");
             }}
           >

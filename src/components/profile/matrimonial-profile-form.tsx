@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
-import { useForm } from "react-hook-form";
+import { useForm, type FieldErrors } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
 import { saveMyMatrimonialProfile } from "@/app/actions/save-my-matrimonial-profile";
@@ -48,6 +48,69 @@ const steps = [
   { id: 4, title: "Preferences & privacy" },
 ] as const;
 
+type StepId = (typeof steps)[number]["id"];
+
+const fieldToStep = {
+  country: 1,
+  displayName: 2,
+  dateOfBirth: 2,
+  gender: 2,
+  seekingGender: 2,
+  heightCm: 2,
+  city: 2,
+  region: 2,
+  religion: 2,
+  education: 2,
+  educationBand: 2,
+  profession: 2,
+  annualIncomeAmount: 2,
+  maritalStatus: 2,
+  aboutMe: 3,
+  diet: 3,
+  smoking: 3,
+  drinking: 3,
+  hasChildren: 3,
+  wantsChildren: 3,
+  languagesSpoken: 3,
+  motherTongue: 3,
+  community: 3,
+  familyType: 3,
+  isOnlyChild: 3,
+  ethnicity: 3,
+  isManglik: 3,
+  hideIncome: 4,
+  photosVisibleTo: 4,
+  acceptedPrivacyTerms: 4,
+  prefMinAge: 4,
+  prefMaxAge: 4,
+  prefMinHeightCm: 4,
+  prefMaxHeightCm: 4,
+  prefCountries: 4,
+  prefReligions: 4,
+  prefEducationBands: 4,
+} as const satisfies Record<keyof MatrimonialProfileFormValues, StepId>;
+
+const fieldsByStep = (Object.keys(fieldToStep) as (keyof MatrimonialProfileFormValues)[]).reduce(
+  (groups, field) => {
+    groups[fieldToStep[field]].push(field);
+    return groups;
+  },
+  { 1: [], 2: [], 3: [], 4: [] } as Record<StepId, (keyof MatrimonialProfileFormValues)[]>,
+);
+
+function firstStepWithErrors(errors: FieldErrors<MatrimonialProfileFormValues>): StepId {
+  for (const field of Object.keys(fieldToStep) as (keyof MatrimonialProfileFormValues)[]) {
+    if (errors[field]) {
+      return fieldToStep[field];
+    }
+  }
+  return 1;
+}
+
+function stepHasErrors(stepId: StepId, errors: FieldErrors<MatrimonialProfileFormValues>) {
+  return fieldsByStep[stepId].some((field) => errors[field]);
+}
+
 export function MatrimonialProfileForm({
   defaultValues,
   submitLabel,
@@ -58,7 +121,7 @@ export function MatrimonialProfileForm({
   redirectTo?: string;
 }) {
   const router = useRouter();
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState<StepId>(1);
   const form = useForm<MatrimonialProfileFormValues>({
     resolver: zodResolver(matrimonialProfileFormSchema),
     defaultValues,
@@ -69,6 +132,8 @@ export function MatrimonialProfileForm({
   const heightUnit = catalog.heightDisplayUnit;
   const heightCm = form.watch("heightCm");
   const feetInches = feetAndInchesFromCentimeters(heightCm);
+
+  const { errors, isSubmitting } = form.formState;
 
   async function onSubmit(values: MatrimonialProfileFormValues) {
     const result = await saveMyMatrimonialProfile(values);
@@ -83,15 +148,29 @@ export function MatrimonialProfileForm({
     }
   }
 
+  function onInvalid(invalid: FieldErrors<MatrimonialProfileFormValues>) {
+    toast.error("Fix the highlighted fields.");
+    setStep(firstStepWithErrors(invalid));
+  }
+
+  async function goToNextStep() {
+    const valid = await form.trigger(fieldsByStep[step], { shouldFocus: true });
+    if (valid && step < 4) {
+      setStep((current) => (current + 1) as StepId);
+    }
+  }
+
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="mx-auto w-full max-w-3xl space-y-8">
+      <form onSubmit={form.handleSubmit(onSubmit, onInvalid)} className="mx-auto w-full max-w-3xl space-y-8">
         <ol className="flex flex-wrap gap-2 text-sm">
           {steps.map((item) => (
             <li key={item.id}>
               <button
                 type="button"
-                className={`rounded-full px-3 py-1 ${step === item.id ? "bg-primary text-primary-foreground" : "bg-muted"}`}
+                className={`rounded-full px-3 py-1 ${
+                  step === item.id ? "bg-primary text-primary-foreground" : "bg-muted"
+                } ${stepHasErrors(item.id, errors) ? "ring-2 ring-destructive" : ""}`}
                 onClick={() => setStep(item.id)}
               >
                 {item.id}. {item.title}
@@ -235,36 +314,41 @@ export function MatrimonialProfileForm({
                 )}
               />
             ) : (
-              <FormItem>
-                <FormLabel>Height</FormLabel>
-                <div className="grid grid-cols-2 gap-2">
-                  <Input
-                    type="number"
-                    min={4}
-                    max={8}
-                    value={feetInches.feet}
-                    onChange={(event) =>
-                      form.setValue(
-                        "heightCm",
-                        centimetersFromFeetAndInches(Number(event.target.value), feetInches.inches),
-                      )
-                    }
-                  />
-                  <Input
-                    type="number"
-                    min={0}
-                    max={11}
-                    value={feetInches.inches}
-                    onChange={(event) =>
-                      form.setValue(
-                        "heightCm",
-                        centimetersFromFeetAndInches(feetInches.feet, Number(event.target.value)),
-                      )
-                    }
-                  />
-                </div>
-                <FormDescription>Feet and inches. Stored as centimeters.</FormDescription>
-              </FormItem>
+              <FormField
+                control={form.control}
+                name="heightCm"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Height</FormLabel>
+                    <div className="grid grid-cols-2 gap-2">
+                      <Input
+                        type="number"
+                        min={4}
+                        max={8}
+                        value={feetInches.feet}
+                        onChange={(event) =>
+                          field.onChange(
+                            centimetersFromFeetAndInches(Number(event.target.value), feetInches.inches),
+                          )
+                        }
+                      />
+                      <Input
+                        type="number"
+                        min={0}
+                        max={11}
+                        value={feetInches.inches}
+                        onChange={(event) =>
+                          field.onChange(
+                            centimetersFromFeetAndInches(feetInches.feet, Number(event.target.value)),
+                          )
+                        }
+                      />
+                    </div>
+                    <FormDescription>Feet and inches. Stored as centimeters.</FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
             )}
             <FormField
               control={form.control}
@@ -661,6 +745,7 @@ export function MatrimonialProfileForm({
                         ? "Required for members in Germany before we create your profile."
                         : "You can export or delete your data later from Settings."}
                     </FormDescription>
+                    <FormMessage />
                   </div>
                 </FormItem>
               )}
@@ -669,16 +754,21 @@ export function MatrimonialProfileForm({
         )}
 
         <div className="flex justify-between gap-4">
-          <Button type="button" variant="outline" disabled={step === 1} onClick={() => setStep((current) => current - 1)}>
+          <Button
+            type="button"
+            variant="outline"
+            disabled={step === 1}
+            onClick={() => setStep((current) => (current === 1 ? current : ((current - 1) as StepId)))}
+          >
             Back
           </Button>
           {step < 4 ? (
-            <Button type="button" onClick={() => setStep((current) => current + 1)}>
+            <Button type="button" onClick={goToNextStep}>
               Continue
             </Button>
           ) : (
-            <Button type="submit" disabled={form.formState.isSubmitting}>
-              {form.formState.isSubmitting ? "Saving…" : submitLabel}
+            <Button type="submit" disabled={isSubmitting}>
+              {isSubmitting ? "Saving…" : submitLabel}
             </Button>
           )}
         </div>

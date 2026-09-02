@@ -21,6 +21,11 @@ export default async function Profiles({
 }) {
   const { session, profile } = await getOptionalBrowseViewer();
   const filters = parseBrowseSearchParams(await searchParams);
+  const defaultGender = profile?.seekingGender ?? "all";
+  const sidebarFilters = {
+    ...filters,
+    gender: filters.gender ?? defaultGender,
+  };
   const viewerCanAct = Boolean(profile);
   const matches = await findProfilesThatMatchSearchFilters({
     viewerUserId: session?.user.id,
@@ -36,7 +41,8 @@ export default async function Profiles({
       <AppSidebar
         key={browseFiltersToSearchParams(filters).toString()}
         viewerCatalog={viewerCatalog}
-        initialFilters={filters}
+        initialFilters={sidebarFilters}
+        defaultGender={defaultGender}
       />
       <main className="flex-1">
         <hgroup className="flex flex-col items-center justify-center space-y-4 text-center">
