@@ -23,10 +23,19 @@ export function loadEnvFileForScripts() {
     const key = line.slice(0, separator).trim();
     let value = line.slice(separator + 1).trim();
     if (
-      (value.startsWith('"') && value.endsWith('"')) ||
-      (value.startsWith("'") && value.endsWith("'"))
+      (value.startsWith('"') && value.includes('"', 1)) ||
+      (value.startsWith("'") && value.includes("'", 1))
     ) {
-      value = value.slice(1, -1);
+      const quoteChar = value[0];
+      const closingQuote = value.indexOf(quoteChar, 1);
+      if (closingQuote !== -1) {
+        value = value.slice(1, closingQuote);
+      }
+    } else {
+      const hashIndex = value.indexOf("#");
+      if (hashIndex !== -1) {
+        value = value.slice(0, hashIndex).trim();
+      }
     }
     if (!process.env[key]) {
       process.env[key] = value;

@@ -31,14 +31,30 @@ function sqlStatementsFromSchemaFile(schemaSql: string) {
 }
 
 async function migrateMatrimonialTables() {
-  const schemaPath = join(dirname(fileURLToPath(import.meta.url)), "matrimonial-schema.sql");
-  const schemaSql = readFileSync(schemaPath, "utf8");
-  const statements = sqlStatementsFromSchemaFile(schemaSql);
+  const rootDir = process.cwd();
+  const authSchemaPath = join(rootDir, "auth-schema.sql");
+  const matrimonialSchemaPath = join(dirname(fileURLToPath(import.meta.url)), "matrimonial-schema.sql");
 
   const client = createClient({
     url: loadTursoUrl(),
     authToken: process.env.TURSO_AUTH_TOKEN,
   });
+
+  // 1. Apply Better Auth schema first (creates user, session, account, verification, rateLimit)
+  try {
+    const authSql = readFileSync(authSchemaPath, "utf8");
+    const authStatements = sqlStatementsFromSchemaFile(authSql);
+    for (const statement of authStatements) {
+      await client.execute(statement);
+    }
+    console.log(`Applied ${authStatements.length} auth schema statements.`);
+  } catch (err) {
+    console.warn("Notice: Could not load auth-schema.sql or skipped:", err instanceof Error ? err.message : err);
+  }
+
+  // 2. Apply Matrimonial schema (creates matrimonial_profile, preferences, likes, etc.)
+  const matrimonialSql = readFileSync(matrimonialSchemaPath, "utf8");
+  const statements = sqlStatementsFromSchemaFile(matrimonialSql);
 
   for (const statement of statements) {
     await client.execute(statement);

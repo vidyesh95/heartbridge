@@ -32,7 +32,6 @@ CREATE INDEX IF NOT EXISTS "session_userId_idx" ON "session" ("userId");
 
 CREATE TABLE IF NOT EXISTS "account" (
   "id" text PRIMARY KEY NOT NULL,
-  "issuer" text NOT NULL,
   "accountId" text NOT NULL,
   "providerId" text NOT NULL,
   "userId" text NOT NULL REFERENCES "user" ("id") ON DELETE CASCADE,
@@ -47,7 +46,7 @@ CREATE TABLE IF NOT EXISTS "account" (
   "updatedAt" date NOT NULL
 );
 
-CREATE UNIQUE INDEX IF NOT EXISTS "account_issuer_accountId_uidx" ON "account" ("issuer", "accountId");
+CREATE UNIQUE INDEX IF NOT EXISTS "account_providerId_accountId_uidx" ON "account" ("providerId", "accountId");
 CREATE INDEX IF NOT EXISTS "account_userId_idx" ON "account" ("userId");
 
 CREATE TABLE IF NOT EXISTS "verification" (

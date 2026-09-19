@@ -12,7 +12,8 @@
     "fmt:check": "oxfmt --check",
     "auth:migrate": "pnpm dlx auth@latest migrate --config src/lib/auth.ts",
     "db:migrate": "tsx src/db/migrate-matrimonial-tables.ts",
-    "db:seed": "tsx src/db/seed/seed-matrimonial-demo-data.ts"
+    "db:seed": "tsx src/db/seed/seed-matrimonial-demo-data.ts",
+    "db:clone": "tsx src/db/transfer-turso-database.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.9.1",
